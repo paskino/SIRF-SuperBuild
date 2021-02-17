@@ -144,8 +144,8 @@ set(DEFAULT_TomoPhantom_URL https://github.com/dkazanc/TomoPhantom )
 set(DEFAULT_TomoPhantom_TAG v1.4)
 
 ## NiftyPET
-set(DEFAULT_NiftyPET_URL https://github.com/pjmark/NIPET )
-set(DEFAULT_NiftyPET_TAG 70b97da0a4eea9445e34831f7393947a37bc77e7)
+set(DEFAULT_NiftyPET_URL https://github.com/NiftyPET/NIPET )
+set(DEFAULT_NiftyPET_TAG v2.0.2)
 
 ## SIRF-Contribs
 set(DEFAULT_SIRF-Contribs_URL https://github.com/SyneRBI/SIRF-Contribs )
