@@ -266,7 +266,8 @@ if (USE_ITK)
 endif()
 
 # If building STIR and CUDA present, offer to build NiftyPET
-if (USE_CUDA AND NOT USE_SYSTEM_STIR)
+# NiftyPET2 requires CMake >=3.18
+if (USE_CUDA AND NOT USE_SYSTEM_STIR AND ${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.18")
   set(USE_NiftyPET ON CACHE BOOL "Build STIR with NiftyPET's projectors") # FORCE)
   if (USE_NiftyPET)
     option(USE_SYSTEM_NiftyPET "Build using an external version of NiftyPET" OFF)

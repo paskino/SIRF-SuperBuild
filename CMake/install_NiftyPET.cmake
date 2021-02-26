@@ -28,6 +28,6 @@ FOREACH(HDR ${HDRS})
 ENDFOREACH()
 
 ## Install libraries
-file(COPY ${NiftyPET_BINARY_DIR}/nipet/prj/petprj.so DESTINATION ${SUPERBUILD_INSTALL_DIR}/lib)
+file(COPY ${NiftyPET_BINARY_DIR}/nipet/prj/libpetprj.so DESTINATION ${SUPERBUILD_INSTALL_DIR}/lib)
 file(COPY ${NiftyPET_BINARY_DIR}/nipet/mmr_auxe.so DESTINATION ${SUPERBUILD_INSTALL_DIR}/lib)
-file(COPY ${NiftyPET_BINARY_DIR}/nipet/lm/mmr_lmproc.so DESTINATION ${SUPERBUILD_INSTALL_DIR}/lib)
+file(COPY ${NiftyPET_BINARY_DIR}/nipet/lm/libmmr_lmproc.so DESTINATION ${SUPERBUILD_INSTALL_DIR}/lib)
