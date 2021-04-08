@@ -1,10 +1,63 @@
 # ChangeLog
+## v#.#.#
+- Add GitHub action for CI. 
+- Docker build moved to Python3 only.
+- Add Gadgetron as a dependency if BUILD_Gadgetron is ON.
+- Switched Travis ctest from --verbose to --output-on-failure and added travis_wait of 20 minutes to keep it from timing-out if some tests take longer than 10.
+- Docker: change to use Python3 (miniconda3-latest)
+- Sets `USE_ITK=ON` by default.
+- Updates for CIL 20.11+ which has a different python module structure. CCPi-FrameworkPlugins has been also removed.
+- Use more recent SIRF hash where the known bug in python algebric methods is fixed.
+- Patch Gadgetron include file hoNDFFT.h to remove spurious ".."
+- Environment files with name env_sirf.sh (and csh) are created. Symbolic links or copies with the previous name env_ccppetmr.sh (and csh) depending on the version of CMake available are made.
+- Enabled HDF5 support for STIR by default (build C++ libraries for HDF5)
+- Disabled building of `Module_ITKReview` by default
+- Fix some issues with finding Python [#472](https://github.com/SyneRBI/SIRF-SuperBuild/issues/472)
+- Add option `BUILD_TESTING_JSON` (default OFF)
+- Updated versions:
+   - JSON: 3.9.1
+   - SWIG: 4.0.2
+   - SIRF: ba1af302970cbe0042a3e47ad81060309854055a
+## v2.2.0
+- Updated to reflect change from CCPPETMR to CCPSyneRBI.
+- Made ${proj}_SOURCE_DIR a cached variables such that the user can point to an existing directory.
+- Added support for passing CMAKE args to projects from the SuperBuild call.
+- Use macros to drastically simplify (and reduce size of) the External*.cmake files.
+- Pass HDF5_ROOT through to projects if it's defined and USE_SYSTEM_HDF5=ON
+- Added checking whether default SWIG executable exists.
+- Corrected logic around building SIRF and Registration.
+- Added JSON as external package.
+- Added option to build ITK with static libraries.
+- Added option to skip ITK path length checks.
+- Added option to compile Armadillo without HDF5 support.
+- Added options to disable STIR JSON support.
+- Added option to disable CUDA.
+- Added option to disable Gadgetron checkouts.
+- Added option to disable Python or MATLAB support.
+- Sorted out Nifty PET capitalisation.
+- Unified OpenMP control.
+- Updated versions:
+   - STIR: rel_4.0.2
+   - CIL:  20.04
+   - SIRF: 2.2.0
 
-## v2.0.1
+## v2.1.0
 - Switch NiftyReg remote from `rijobro` to `KCL-BMEIS` (following the acceptance of one of our PRs to their code).
 - Azure:
     - Added NVIDIA GPU support
     - Now using Terraform HCL v0.12
+- Added CCPi CIL support and various packages for that
+- Added preliminary install option for NiftyPET
+- Added CUDA and OpenMP support for some packages
+- Improved documentation for docker
+- Updated various versions
+    - NiftyReg: 1.5.68
+    - ISMRMRD: v1.4.1
+    - STIR: stir_rel_4_00_alpha
+    - SIRF: v2.1.0
+    - PET RD Tools: v1.1.0
+    - Armadillo: 9.800.2
+- petmr-rd-tools -> pet-rd-tools fixes
 
 ## v2.0.0
 - Added CMake Variable `Gadgetron_USE_MKL` to allow Gadgetron build with MKL if available

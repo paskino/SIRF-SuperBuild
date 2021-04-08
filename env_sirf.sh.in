@@ -1,0 +1,34 @@
+# This file sets environment variables for the CCP SyneRBI software.
+# Use it like this		
+#    source /path/to/whereever/env_ccppetmr.sh		
+# Preferably add this line to your .basrhc, .profile or whatever file is appropriate for your shell		
+  		  
+SIRF_PATH=@SIRF_SOURCE_DIR@
+export SIRF_PATH
+
+# Where all binaries are installed
+SIRF_INSTALL_PATH=@SyneRBI_INSTALL@
+export SIRF_INSTALL_PATH
+# Where to find shared libraries
+# Setting for Linux but doesn't harm elsewhere
+LD_LIBRARY_PATH=@SyneRBI_INSTALL@/lib:@SyneRBI_INSTALL@/lib64:$LD_LIBRARY_PATH:@Matlab_extra_ld_path@
+export LD_LIBRARY_PATH
+# Setting for MacOS but doesn't harm elsewhere
+DYLD_FALLBACK_LIBRARY_PATH=@SyneRBI_INSTALL@/lib:$DYLD_FALLBACK_LIBRARY_PATH
+export DYLD_FALLBACK_LIBRARY_PATH
+
+#####     Environment variables for Python    
+@ENV_PYTHON_BASH@
+
+#####     Environment variables for Matlab    
+@ENV_MATLAB_BASH@
+
+PATH=@SyneRBI_INSTALL@/bin:$PATH
+
+# Export Gadgetron Home
+@ENV_GADGETRON_HOME_SH@
+
+if [ ! -n "$STIR_PATH" ]
+then
+	export STIR_PATH=@STIR_SOURCE_DIR@
+fi
