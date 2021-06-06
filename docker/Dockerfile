@@ -52,6 +52,7 @@ RUN [ -e /usr/bin/X ] || ln -s /usr/bin/Xorg /usr/bin/X
 RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
   gosu \
   && apt-get clean
+
 ENV DEBIAN_FRONTEND ''
 WORKDIR /home-away
 COPY entrypoint.sh /usr/local/bin/
@@ -91,6 +92,9 @@ RUN rm user_sirf-ubuntu.sh
 
 RUN mv ~/.git-prompt.sh .
 
+# give everyone write permisions to /opt as we won't run as root
+RUN chmod -R go+w /opt
+
 ENV DEBIAN_FRONTEND ''
 CMD ["/bin/bash"]
 
@@ -101,6 +105,8 @@ COPY requirements-service.txt .
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
 RUN rm user_service-ubuntu.sh requirements-service.txt
+# give everyone write permisions to /opt as we won't run as root
+RUN chmod -R go+w /opt
 
 COPY download_data.sh /usr/local/bin/
 
