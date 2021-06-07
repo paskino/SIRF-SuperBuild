@@ -68,15 +68,21 @@ COPY .bashrc .
 COPY .profile .
 RUN chmod 644 .bashrc .profile
 
+# Note: we want to have files/directories in /opt to be writable by everyone
+# such that sirfuser can update them so want to use "umask 000".
+# Sadly, it seems we need to specify umask for every relevant line again.
+
 # Python (virtualenv)
 COPY requirements.txt .
 COPY user_python-ubuntu.sh .
-RUN bash user_python-ubuntu.sh
+RUN umask 000 && bash user_python-ubuntu.sh
 RUN rm user_python-ubuntu.sh requirements.txt
 
 # SIRF
 COPY user_sirf-ubuntu.sh .
 COPY devel/.ccache/ /opt/ccache/
+# give everyone write permisions as the container won't run as root
+RUN chmod -R go+w /opt/ccache
 RUN ccache -o cache_dir=/opt/ccache
 ARG BUILD_FLAGS="\
  -DCMAKE_BUILD_TYPE=Release\
@@ -87,13 +93,11 @@ ARG BUILD_FLAGS="\
  -DUSE_NiftyPET=OFF\
  -DBUILD_siemens_to_ismrmrd=ON -DBUILD_pet_rd_tools=ON"
 ARG EXTRA_BUILD_FLAGS=""
-RUN bash user_sirf-ubuntu.sh
+RUN umask 000 && bash user_sirf-ubuntu.sh
 RUN rm user_sirf-ubuntu.sh
 
+# move /root/.git-prompt.sh (created by executing .bashrc in the above scripts) to .
 RUN mv ~/.git-prompt.sh .
-
-# give everyone write permisions to /opt as we won't run as root
-RUN chmod -R go+w /opt
 
 ENV DEBIAN_FRONTEND ''
 CMD ["/bin/bash"]
@@ -105,8 +109,6 @@ COPY requirements-service.txt .
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
 RUN rm user_service-ubuntu.sh requirements-service.txt
-# give everyone write permisions to /opt as we won't run as root
-RUN chmod -R go+w /opt
 
 COPY download_data.sh /usr/local/bin/
 
