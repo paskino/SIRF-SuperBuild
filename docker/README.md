@@ -1,10 +1,10 @@
-# SIRF on Ubuntu 18.04 on Docker
+# SIRF in Docker
 
 Docker wrapper for CCP SyneRBI SIRF.
 
 ## TL;DR, I want a Jupyter notebook service NOW
 
-1. Install [docker CE][docker-ce] and [`docker-compose`][docker-compose]. If you are on Linux/CentOS/similar and have a GPU,
+1. Install [docker CE][docker-ce] and [`docker-compose`][docker-compose]. (If you are on a Mac, these are installed when you install [Docker Desktop](https://www.docker.com/products/docker-desktop)). If you are on Linux/CentOS/similar and have a GPU,
 install the [NVidia container runtime][NVidia-container-runtime].
 2. Download the SIRF-SuperBuild ([current master](https://github.com/SyneRBI/SIRF-SuperBuild/archive/master.zip), or
 [latest release](https://github.com/SyneRBI/SIRF-SuperBuild/releases)) or
@@ -14,7 +14,7 @@ git clone https://github.com/SyneRBI/SIRF-SuperBuild.git
 and change directory to this folder, `SIRF-SuperBuild/docker`.
 
 3. Optionally pull the pre-built image with `docker pull synerbi/sirf:service` (or `docker pull synerbi/sirf:service-gpu`), otherwise
-the next line will build it, resulting in a much smaller download but larger build time.
+the next line will build it, resulting in a much smaller download but longer build time.
 4. Run `./sirf-compose-server up -d sirf` (or `./sirf-compose-server-gpu up -d sirf`)
 5. Open a browser at <http://localhost:9999>.
 Note that starting the container may take a few seconds the first
@@ -35,7 +35,7 @@ eventually there should be a message stating the notebook has started.)
 - The directory is mounted at `/devel` in the docker container
 from `./devel` (in this folder) on the host. The container will copy
 [SIRF-Exercises] into this folder if not present. This means that
-files and notebooks in `./devel` will be persistent between sessions and
+files and notebooks in `./devel` will persist between sessions and
 even docker-image upgrades.
 - If on Windows, `localhost` probably won't work.
 Find out the service IP address using:
@@ -46,9 +46,9 @@ and use the resultant IP instead of `localhost` (e.g.: `172.18.0.2:9999`).
 
 ## Tags
 
-The repository is hosted at [hub.docker.com][dockerhub-SIRF]. We upload 2 classes of images (see below for more information):
+The docker images are hosted at [hub.docker.com][dockerhub-SIRF]. We upload 2 types of images (see below for more information):
 - Command Line Interface (CLI)-only
-- "Service" images have `Jupyter` notebook server and auto-start it
+- "Service" images that will serve `Jupyter` notebooks 
 
 To pull directly, use:
 
