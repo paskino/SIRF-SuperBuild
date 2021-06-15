@@ -1,0 +1,25 @@
+version: '2.3'
+services:
+ sirf:
+  runtime: nvidia
+  image: synerbi/sirf:jupyterhub-gpu
+  build:
+   target: service
+   args:
+    BASE_IMAGE: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+    EXTRA_BUILD_FLAGS: "-DBUILD_CIL=ON"
+   cache_from:
+    - synerbi/sirf:core-gpu
+    - synerbi/sirf:jupyterhub-gpu
+ core:
+  image: synerbi/sirf:core-gpu
+  build:
+   args:
+    BASE_IMAGE: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+   cache_from:
+    - ubuntu:18.04
+    - nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+    - synerbi/sirf:core-gpu
+ gadgetron:
+  image: gadgetron/ubuntu_1804_cuda90_cudnn7:latest
+  runtime: nvidia
