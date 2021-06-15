@@ -201,6 +201,9 @@ RUN chmod 644 .bashrc .profile &&\
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID} 
 ENV PATH "/opt/pyvenv/bin:$PATH"
+ENV LD_LIBRARY_PATH "/opt/SIRF-SuperBuild/INSTALL/lib:/opt/SIRF-SuperBuild/INSTALL/lib64:/opt/pyvenv/lib/:$LD_LIBRARY_PATH"
+ENV PYTHONPATH "/opt/SIRF-SuperBuild/INSTALL/python"
+ENV SIRF_INSTALL_PATH "/opt/SIRF-SuperBuild/INSTALL"
 RUN echo $PATH
 
 CMD ["/usr/local/bin/service.sh"]
