@@ -195,14 +195,21 @@ ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
-# TODO install jupyterhub requirements
 
+# install jupyterhub-singleuser
+COPY requirements-service-jupyterhub.txt .
+COPY user_jupyterhub-ubuntu.sh .
+RUN bash user_jupyterhub-ubuntu.sh
+RUN rm user_jupyterhub-ubuntu.sh requirements-service-jupyterhub.txt
 USER "${NB_USER}"
 
 ENTRYPOINT ["/tini", "-g", "--"]
 # TODO some stuff here
-#CMD ["/usr/local/bin/service-jupyterhub.sh"]
+# CMD ["/usr/local/bin/service-jupyterhub.sh"]
 
-# TODO set some env variables (or do it in a compose file)
-
-ENV DEBIAN_FRONTEND ''
+# set some env variables (or do it in a compose file)
+USER ${NB_UID} 
+ENV PATH "/opt/pyvenv/bin:$PATH"
+ENV LD_LIBRARY_PATH "/opt/SIRF-SuperBuild/INSTALL/lib:/opt/SIRF-SuperBuild/INSTALL/lib64:/opt/pyvenv/lib/:$LD_LIBRARY_PATH"
+ENV PYTHONPATH "/opt/SIRF-SuperBuild/INSTALL/python"
+ENV SIRF_INSTALL_PATH "/opt/SIRF-SuperBuild/INSTALL"
