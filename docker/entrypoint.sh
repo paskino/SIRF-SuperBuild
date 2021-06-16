@@ -17,10 +17,10 @@ if [ -d $HOME ]; then
   exec gosu $mainUser "$@"
 fi
 
-# We need to create files from /home-away to new home and create the user
+# We need to copy files from /home-away to new home and create the user
 
 # copy files
-[ -d $OLD_HOME ] && cp -rp $OLD_HOME $HOME
+[ -d $OLD_HOME ] && cp -r $OLD_HOME $HOME
 cd $HOME
 
 echo "Creating $mainUser:$USER_ID:$GROUP_ID"

@@ -149,9 +149,9 @@ set(DEFAULT_JSON_TAG v3.9.1)
 
 # CCPi CIL
 set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
-set(DEFAULT_CIL_TAG "v21.1.0")
+set(DEFAULT_CIL_TAG "ca12ef252e68eaa7a3cccd19250e5481f02bcfd2")
 set(DEFAULT_CIL-ASTRA_URL https://github.com/TomographicImaging/CIL-ASTRA.git)
-set(DEFAULT_CIL-ASTRA_TAG "v21.0.0")
+set(DEFAULT_CIL-ASTRA_TAG "v21.2.0")
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
 set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v20.09")
 
@@ -190,7 +190,7 @@ if (DEVEL_BUILD)
   set(DEFAULT_CCPi-Regularisation-Toolkit_TAG origin/master)
 
 else()
-  set(DEFAULT_SIRF_TAG 4ad0ce6d5fb34713e53328d0f559b4e42b347d8f)
+  set(DEFAULT_SIRF_TAG e3d50cdc826663ca3b9efab561effc18b3cc6e43)
 #  set(DEFAULT_SIRF_TAG v3.0.0)
 
   ## STIR
