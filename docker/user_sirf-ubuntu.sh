@@ -14,9 +14,9 @@ cmake $BUILD_FLAGS $EXTRA_BUILD_FLAGS $COMPILER_FLAGS .
 
 cmake --build . -j 2
 
-[ -f INSTALL/share/gadgetron/config/gadgetron.xml ] || \
-[ -f INSTALL/share/gadgetron/config/gadgetron.xml.example ] && \
-  mv INSTALL/share/gadgetron/config/gadgetron.xml.example \
-     INSTALL/share/gadgetron/config/gadgetron.xml
+if [ ! $? -eq '0' ]
+then 
+  cmake --build . -j 2
+fi
 
 popd
