@@ -175,6 +175,7 @@ COPY requirements-service-jupyterhub.txt .
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
 RUN rm user_service-ubuntu.sh requirements-service.txt
+RUN apt install nfs-common -y
 
 COPY download_data.sh /usr/local/bin/
 
