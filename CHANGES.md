@@ -1,17 +1,25 @@
 # ChangeLog
 
-## v3.x.x
-- disable built of NiftyPET by default as requires Python2 for which we dropped support
+## v3.1.0
 - docker:
-  - major change w.r.t. users and permissions. We know build as user jovyan (by default)
-    and still switch to sirfuser for running the container. This avoids having to
+  - major change w.r.t. users and permissions. We now build as user `jovyan` (by default)
+    and still switch to `sirfuser` for running the container. This avoids having to
     reset permissions of many files, and therefore speeds-up container start-up.
+  - introduced `SIRF_SB_URL`, `SIRF_SB_TAG` and `NUM_PARALLEL_BUILDS`. They default to the
+    values used before (i.e. resp. the main `SIRF-SuperBuild` repo, `master` and `2`).
   - add dependencies that are available only from conda-forge (for CIL)
-- updated ISMRMRD to 1.4.2.1
+  - improved documentation
+- allow specifying `HDF5_URL` and `HDF5_TAG` like for other projects
+- updated versions:
+  - SIRF: 3.1.0
+  - CIL: b81326291c6061d57fa332a248cb9d15d9f957eb
+  - CIL-ASTRA: 21.2.0
+- disable built of NiftyPET by default as our current setup  requires Python2 for which we dropped support
+- Continuous Integration testing:
+    - Removed all Travis runs except those that run docker
 
 ## v3.0.0
-- travis to use BUILD_CIL=ON for all Docker builds
-- Add GitHub action for CI. 
+- use BUILD_CIL=ON for all Docker builds
 - Docker build moved to Python3 only.
 - Environment files with name env_sirf.sh (and csh) are created. Symbolic links or copies with the previous name env_ccppetmr.sh (and csh) depending on the version of CMake available are made.
 - Fix some issues with finding Python [#472](https://github.com/SyneRBI/SIRF-SuperBuild/issues/472)
@@ -32,7 +40,7 @@
    - CIL: 21.1.0
    - CCPi-Regularisation toolkit: 20.09
 - Continuous Integration testing:
-    - Add GitHub actions and removed most Travs runs
+    - Add GitHub actions and removed most Travis runs
     - Switched Travis ctest from --verbose to --output-on-failure and added travis_wait of 20 minutes to keep it from timing-out if some tests take longer than 10.
 
 ## v2.2.0
