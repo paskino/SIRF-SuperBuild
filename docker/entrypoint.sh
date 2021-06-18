@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# This script is expected to be run as root
-# at container start-up time
+# This script is run at container start-up time
+
+if [ ! "$(id -u)" = 0 ]; then
+    # we're not root, just execute the argument(s)
+    exec "$@"
+fi
+
+# we are root
 
 # Add local user
 # Either use runtime USER_ID:GROUP_ID or fallback 1000:1000
