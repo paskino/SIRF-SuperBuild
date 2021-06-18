@@ -114,6 +114,13 @@ USER "${NB_USER}"
 RUN ccache -o cache_dir=/opt/ccache
 COPY user_sirf-ubuntu.sh .
 
+# SIRF-SuperBuild version
+ARG SIRF_SB_URL="https://github.com/SyneRBI/SIRF-SuperBuild"
+ARG SIRF_SB_TAG="master"
+# speeding up the cmake build
+# (implementation note: changing this in your environment will invalidate the docker cache sadly)
+ARG NUM_PARALLEL_BUILDS="2"
+
 ARG BUILD_FLAGS="\
  -DCMAKE_BUILD_TYPE=Release\
  -DBUILD_STIR_WITH_OPENMP=ON -DUSE_SYSTEM_ACE=ON\
@@ -208,7 +215,7 @@ ENTRYPOINT ["/tini", "-g", "--"]
 # CMD ["/usr/local/bin/service-jupyterhub.sh"]
 
 # set some env variables (or do it in a compose file)
-USER ${NB_UID} 
+USER ${NB_USER}
 ENV PATH "/opt/pyvenv/bin:$PATH"
 ENV LD_LIBRARY_PATH "/opt/SIRF-SuperBuild/INSTALL/lib:/opt/SIRF-SuperBuild/INSTALL/lib64:/opt/pyvenv/lib/:$LD_LIBRARY_PATH"
 ENV PYTHONPATH "/opt/SIRF-SuperBuild/INSTALL/python"

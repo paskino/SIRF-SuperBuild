@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# This script is expected to be run as root
-# at container start-up time
+# This script is run at container start-up time
+
+if [ ! "$(id -u)" = 0 ]; then
+    # we're not root, just execute the argument(s)
+    exec "$@"
+fi
+
+# we are root
 
 # Add local user
 # Either use runtime USER_ID:GROUP_ID or fallback 1000:1000
@@ -36,7 +42,7 @@ addgroup "$mainUser" users
 
 echo "$mainUser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/"$mainUser"
 
-for i in /opt/*-Exercises /opt/*-Demos "$HOME"; do
+for i in "$HOME"; do
   if [ -d "$i" ]; then
     echo "Updating file ownership for $i"
     chown -R $mainUser:$mainUser "$i"
