@@ -36,8 +36,11 @@ GCONFIG=./INSTALL/share/gadgetron/config/gadgetron.xml
 [ -f ./INSTALL/bin/gadgetron ] \
   && ./INSTALL/bin/gadgetron >& ~/gadgetron.log&
 
-echo "make sure the SIRF-Exercises are in the expected location (/devel in the container)"
-cd /devel
+echo "make sure the SIRF-Exercises are in the expected location"
+# if /devel exists, put it there
+[ -d /devel ] && cd /devel
+# otherwise, put it in the home directory
+[ ! -d /devel ] && cd ~
 [ -d SIRF-Exercises ] || cp -a $SIRF_PATH/../../../SIRF-Exercises .
 # link SIRF-Contrib into it
 if [ ! -r SIRF-contrib ]; then
