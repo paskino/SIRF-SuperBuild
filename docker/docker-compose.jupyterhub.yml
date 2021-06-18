@@ -6,7 +6,7 @@ services:
   environment:
    GADGETRON_RELAY_HOST: 0.0.0.0
   build:
-   target: service
+   target: jupyterhub
    cache_from:
     - synerbi/sirf:core
     - synerbi/sirf:latest
