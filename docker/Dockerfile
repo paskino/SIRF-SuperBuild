@@ -215,7 +215,7 @@ ENTRYPOINT ["/tini", "-g", "--"]
 # CMD ["/usr/local/bin/service-jupyterhub.sh"]
 
 # set some env variables (or do it in a compose file)
-USER ${NB_UID} 
+USER ${NB_USER}
 ENV PATH "/opt/pyvenv/bin:$PATH"
 ENV LD_LIBRARY_PATH "/opt/SIRF-SuperBuild/INSTALL/lib:/opt/SIRF-SuperBuild/INSTALL/lib64:/opt/pyvenv/lib/:$LD_LIBRARY_PATH"
 ENV PYTHONPATH "/opt/SIRF-SuperBuild/INSTALL/python"
