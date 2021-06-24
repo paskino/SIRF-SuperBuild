@@ -131,12 +131,20 @@ COPY user_sirf-ubuntu_Gadgetron.sh .
 COPY devel/.ccache/ /opt/ccache/
 RUN ccache -o cache_dir=/opt/ccache
 
+# install ssh and vim on the jupyterhub
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+  vim \
+  ssh \
+  fonts-freefont-ttf \
+  && apt-get clean
+
 # Switch to jovyan
 # USER ${NB_UID} 
 ARG BUILD_FLAGS="\
  -DCMAKE_BUILD_TYPE=Release\
  -DBUILD_STIR_WITH_OPENMP=ON -DUSE_SYSTEM_ACE=ON\
- -DUSE_SYSTEM_Armadillo=ON -DUSE_SYSTEM_Boost=ON -DBUILD_CIL=ON\
+ -DUSE_SYSTEM_Armadillo=ON -DUSE_SYSTEM_Boost=ON\
+ -DBUILD_CIL=ON\
  -DUSE_SYSTEM_FFTW3=ON -DUSE_SYSTEM_HDF5=ON -DUSE_ITK=ON\
  -DUSE_SYSTEM_SWIG=ON\
  -DUSE_NiftyPET=OFF\
@@ -172,10 +180,15 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY requirements-service.txt .
 # install jupyterhub-singleuser
 COPY requirements-service-jupyterhub.txt .
+# install pyapetnet requirements
+COPY requirements-pyapetnet.txt .
+
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
-RUN rm user_service-ubuntu.sh requirements-service.txt
+RUN rm user_service-ubuntu.sh requirements-service.txt requirements-pyapetnet.txt
 RUN apt install nfs-common -y
+
+
 
 COPY download_data.sh /usr/local/bin/
 
@@ -199,12 +212,15 @@ RUN chmod 644 .bashrc .profile &&\
     fix-permissions /opt/SIRF-SuperBuild/INSTALL
 
 
+
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID} 
-ENV PATH "/opt/pyvenv/bin:$PATH"
+ENV PATH "/opt/pyvenv/bin:/opt/SIRF-SuperBuild/INSTALL/bin:$PATH"
 ENV LD_LIBRARY_PATH "/opt/SIRF-SuperBuild/INSTALL/lib:/opt/SIRF-SuperBuild/INSTALL/lib64:/opt/pyvenv/lib/:$LD_LIBRARY_PATH"
 ENV PYTHONPATH "/opt/SIRF-SuperBuild/INSTALL/python"
 ENV SIRF_INSTALL_PATH "/opt/SIRF-SuperBuild/INSTALL"
+ENV SIRF_EXERCISES_DATA_PATH "/mnt/materials/SIRF/Fully3D/SIRF/"
+ENV SIRF_PATH "/opt/SIRF-SuperBuild/sources/SIRF"
 RUN echo $PATH
 
 CMD ["/usr/local/bin/service.sh"]
