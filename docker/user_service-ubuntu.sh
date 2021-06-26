@@ -36,7 +36,15 @@ if [ -f requirements.txt ]; then
     rm crequirements.txt
   fi
 fi
+# configure nbstripout
+git config --global filter.nbstripout.extrakeys '
+  metadata.celltoolbar metadata.language_info.codemirror_mode.version
+  metadata.language_info.pygments_lexer metadata.language_info.version'
+  
+nbstripout --install
 # jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # CIL-Demos
 git clone https://github.com/TomographicImaging/CIL-Demos.git --recursive -b main $INSTALL_DIR/CIL-Demos
+cd $INSTALL_DIR/CIL-Demos
+nbstripout --install
