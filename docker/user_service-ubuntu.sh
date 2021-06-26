@@ -20,8 +20,10 @@ fi
 
 # install pyapetnet requirements
 if [ -f requirements-pyapetnet.txt ]; then
-  conda install -c conda-forge -y --file requirements-pyapetnet.txt || \
-  pip install -U -r requirements-pyapetnet.txt
+  while read in; do 
+    conda install -c conda-forge -y ${in} || \
+    pip install -U ${in}; done < requirements-pyapetnet.txt
+  
 fi
 #install SIRF-Exercises requirements
 cd $INSTALL_DIR/SIRF-Exercises

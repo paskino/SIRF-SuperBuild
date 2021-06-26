@@ -182,6 +182,9 @@ COPY requirements-service.txt .
 COPY requirements-service-jupyterhub.txt .
 # install pyapetnet requirements
 COPY requirements-pyapetnet.txt .
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+  graphviz \
+  && apt-get clean
 
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
