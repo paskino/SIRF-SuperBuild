@@ -182,15 +182,18 @@ COPY requirements-service.txt .
 COPY requirements-service-jupyterhub.txt .
 # install pyapetnet requirements
 COPY requirements-pyapetnet.txt .
-RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
-  graphviz \
-  && apt-get clean
 
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
-RUN rm user_service-ubuntu.sh requirements-service.txt requirements-pyapetnet.txt
+RUN rm user_service-ubuntu.sh requirements-service.txt
 RUN apt install nfs-common -y
 
+# install requirements for pyapetnet
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+  graphviz \
+  && apt-get clean
+COPY user_pyapetnet-ubuntu.sh .
+RUN bash user_pyapetnet-ubuntu.sh && rm user_pyapetnet-ubuntu.sh
 
 
 COPY download_data.sh /usr/local/bin/

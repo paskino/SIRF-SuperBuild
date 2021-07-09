@@ -18,20 +18,16 @@ if [ -f requirements-service-jupyterhub.txt ]; then
   pip install -U -r requirements-service-jupyterhub.txt
 fi
 
-# install pyapetnet requirements
-if [ -f requirements-pyapetnet.txt ]; then
-  while read in; do 
-    conda install -c conda-forge -y ${in} || \
-    pip install -U ${in}; done < requirements-pyapetnet.txt
-  
-fi
 #install SIRF-Exercises requirements
 cd $INSTALL_DIR/SIRF-Exercises
 if [ -f requirements.txt ]; then
-   # uses only the requirement name not --only-binary
-   awk '{print $1}' requirements.txt > crequirements.txt
-  conda install -c conda-forge -y --file crequirements.txt || \
-  pip install -U -r requirements.txt
+   # uses only the requirement name not --only-binary and removes empty lines and comments
+   awk '{if ($1!="#" & NF) {print $1} }'  requirements.txt > crequirements.txt
+
+   while read in; do 
+    conda install -c conda-forge -y ${in} || \
+    pip install -U ${in}; done < crequirements.txt
+
   if [ -f crequirements.txt ] ; then
     rm crequirements.txt
   fi
@@ -48,3 +44,5 @@ nbstripout --install
 git clone https://github.com/TomographicImaging/CIL-Demos.git --recursive -b main $INSTALL_DIR/CIL-Demos
 cd $INSTALL_DIR/CIL-Demos
 nbstripout --install
+
+
