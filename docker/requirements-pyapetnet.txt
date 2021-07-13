@@ -1,6 +1,5 @@
 cudatoolkit=11.2
 cudnn=8.1
-tensorflow=2.5
 ipympl>=0.7
 pydot
 graphviz

@@ -22,7 +22,7 @@ fi
 cd $INSTALL_DIR/SIRF-Exercises
 if [ -f requirements.txt ]; then
    # uses only the requirement name not --only-binary and removes empty lines and comments
-   awk '{if ($1!="#" & NF) {print $1} }'  requirements.txt > crequirements.txt
+   awk '{if ($1!="#" && NF) {print $1} }'  requirements.txt > crequirements.txt
 
    while read in; do 
     conda install -c conda-forge -y ${in} || \
