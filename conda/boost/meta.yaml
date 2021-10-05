@@ -36,9 +36,9 @@ requirements:
   run:
     - vc 14 # [win and py35]
     - vc 9  # [win and py27]
-    - h5py
-    - psutil
-    - fftw
+    # - h5py
+    # - psutil
+    # - fftw
     - libgcc-ng
     - libstdcxx-ng
     - openblas

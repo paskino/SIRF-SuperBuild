@@ -57,14 +57,14 @@ cmake ../SIRF-SuperBuild \
     -DUSE_SYSTEM_Boost=On \
     -DUSE_SYSTEM_Armadillo=On \
     -DUSE_SYSTEM_ISMRMRD=ON\
-    -DUSE_SYSTEM_STIR=Off\
+    -DUSE_SYSTEM_STIR=ON\
     -DUSE_SYSTEM_FFTW3=On \
     -DUSE_SYSTEM_HDF5=ON \
     -DBUILD_siemens_to_ismrmrd=Off \
     -DUSE_SYSTEM_GTest=On\
     -DUSE_ITK=ON\
-    -DUSE_SYSTEM_ITK=OFF\
-    -DUSE_SYSTEM_NIFTYREG=OFF\
+    -DUSE_SYSTEM_ITK=ON\
+    -DUSE_SYSTEM_NIFTYREG=ON\
     -DCONDA_BUILD=On
 
 make -j2 NIFTYREG

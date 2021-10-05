@@ -19,12 +19,11 @@ build:
     
 requirements:
   build:
-    #- boost ==1.64.0	
-    #- boost-cpp ==1.64.0 
     - boost >=1.63
 #    - boost-cpp
-    - python 
-    - {{ pin_compatible('numpy', max_pin='x.x') }}
+    - python {{ python }}
+    # - {{ pin_compatible('numpy', max_pin='x.x') }}
+    - numpy {{ numpy }}
 #    - python 2.7 # [py27]
     - cmake >=3.1
     - vc 14 # [win and py36] 
@@ -32,9 +31,8 @@ requirements:
 #    - scipy
 #    - matplotlib
 #    - docopt
-    - h5py
+    # - h5py
     - hdf5 ==1.10.1
-#    - libxml2
     - psutil
     - nose
     - coverage
@@ -44,13 +42,15 @@ requirements:
 #    - armadillo
     - gtest
     - ismrmrd
+    - stir
+    - niftyreg
 
 
   run:
     - vc 14 # [win and py35]
     - vc 9  # [win and py27]
-    - python
-    - {{ pin_compatible('numpy', max_pin='x.x') }}
+    - python {{ python }}
+    - numpy {{ numpy }}
     - scipy
     - matplotlib
     - docopt
@@ -73,6 +73,7 @@ requirements:
     - ismrmrd
     - _openmp_mutex # [linux]
     - stir
+    - niftyreg
 	
 about:
   home: http://www.ccppetmr.ac.uk
