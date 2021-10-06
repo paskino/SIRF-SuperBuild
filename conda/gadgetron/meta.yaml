@@ -1,12 +1,12 @@
 package:
   name: gadgetron
-#  version: {{ environ['SIRF_VERSION'] }}
-  version: b6191eaaa72ccca6c6a5fe4c0fa3319694f512ab
+  version: 3.8.2
+  # version: b6191eaaa72ccca6c6a5fe4c0fa3319694f512ab
 
 
 build:
   preserve_egg_dir: False
-#  number: 0
+  number: 1448
   missing_dso_whitelist:
     - $RPATH/libc.so.6  # [linux]
     - $RPATH/libm.so.6  # [linux]
@@ -44,6 +44,7 @@ requirements:
 #    - libxslt
     - armadillo
     - gtest
+    - gmock
     - ismrmrd
     - ace
 
@@ -66,7 +67,6 @@ requirements:
     - openblas
     - libopenblas
     - armadillo
-    - gtest
     - ismrmrd
     - ace
     - cudatoolkit =10.1
