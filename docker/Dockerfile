@@ -180,21 +180,11 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY requirements-service.txt .
 # install jupyterhub-singleuser
 COPY requirements-service-jupyterhub.txt .
-# install pyapetnet requirements
-COPY requirements-pyapetnet.txt .
 
 COPY user_service-ubuntu.sh .
 RUN bash user_service-ubuntu.sh
 RUN rm user_service-ubuntu.sh requirements-service.txt
 RUN apt install nfs-common -y
-
-# install requirements for pyapetnet
-RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
-  graphviz \
-  && apt-get clean
-COPY user_pyapetnet-ubuntu.sh .
-RUN bash user_pyapetnet-ubuntu.sh && rm user_pyapetnet-ubuntu.sh
-
 
 COPY download_data.sh /usr/local/bin/
 
@@ -239,5 +229,25 @@ ARG NB_GID="100"
 ARG HOME="/home/${NB_USER}" 
 COPY service.multi.sh /usr/local/bin/
 
+from service as pyapetnet
 
+ARG NB_USER="jovyan"
+ARG NB_UID="1000"
+ARG NB_GID="100"
+ARG HOME="/home/${NB_USER}" 
 
+# install requirements for pyapetnet
+
+# switch back to root to install
+USER root
+
+ENV DEBIAN_FRONTEND noninteractive
+COPY requirements-pyapetnet.txt .
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+  graphviz \
+  && apt-get clean
+COPY user_pyapetnet-ubuntu.sh .
+RUN bash user_pyapetnet-ubuntu.sh && rm user_pyapetnet-ubuntu.sh
+
+# Switch back to jovyan to avoid accidental container runs as root
+USER ${NB_UID} 
