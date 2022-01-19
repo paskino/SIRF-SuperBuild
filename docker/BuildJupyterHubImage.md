@@ -32,7 +32,6 @@ docker tag 9cbadae5917e paskino/jupyter:scipy-notebook-cuda11
 cd ../datascience-notebook
 docker build --build-arg BASE_CONTAINER=paskino/jupyter:scipy-notebook-cuda11 .
 
-# SCD cloud images
-# jupyter-datascience-notebook
+# the latter is the minimal base image for jupyter and GPU
 
 ```
