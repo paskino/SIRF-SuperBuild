@@ -4,7 +4,7 @@ FROM ${BASE_IMAGE} as base
 
 # Install CIL with all packages from conda: https://github.com/TomographicImaging/CIL#installation
 COPY requirements_conda_forge.txt . 
-RUN conda install -c conda-forge -c intel -c ccpi -c astra-toolbox/label/dev --file requirements_conda_forge.txt
+RUN conda install -c conda-forge -c intel -c ccpi/label/dev -c ccpi -c astra-toolbox/label/dev --file requirements_conda_forge.txt
 
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage
@@ -53,9 +53,13 @@ RUN rm build_system-ubuntu.sh
 RUN cp /tini /usr/bin
 RUN chmod +x /usr/bin/tini
 
-# install requirements skipping CIL ones that are taken care of by conda
+# install additional requirements, other than the CIL ones that are taken care of by conda above
 RUN conda install deprecation nibabel nose docopt -c conda-forge -c intel -c astra-toolbox/label/dev -c ccpi
 RUN python -m pip install git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools
+
+#Additional software for Hackathon in Berlin 22
+COPY berlin_hackathon_22.sh .
+RUN bash berlin_hackathon_22.sh && rm berlin_hackathon_22.sh
 
 # switch back to 
 USER jovyan
