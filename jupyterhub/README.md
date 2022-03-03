@@ -6,8 +6,8 @@ A few mods for use with Ubuntu 18.04 are in the fork https://github.com/paskino/
 However, we require GPU access (for [CIL](https://github.com/TomographicImaging/CIL.git)).
 
 The strategy is:
-  1. to modify the `datascience-notebook` to have the `nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04` base image, `paskino/jupyter:datascience-notebook-cuda10-ubuntu18.04`
-  1. build the `synerbi/sirf:sirf-core` image with the `nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04` base image
+  1. to modify the `datascience-notebook` to have the `nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04` base image, `paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu18.04`
+  1. build the `synerbi/sirf:sirf-core` image with the `nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04` base image
   1. build the jupyterhub image from the image at point 1, copy the SIRF `INSTALL` directory from the `synerbi/sirf:sirf-core` (previous step), set the appropriate environmental variable and install CIL via conda
 
 Jupyterhub uses images from https://github.com/jupyter/docker-stacks which 
@@ -16,7 +16,7 @@ Jupyterhub uses images from https://github.com/jupyter/docker-stacks which
 
 Currently the `base-notebook` in [`jupyter/docker-stacks`](`https://github.com/jupyter/docker-stacks`) builds on top of Ubuntu 20.04. The `tini` package is [required](https://github.com/jupyter/docker-stacks/blob/f27d615c5052c3a567835ceba3c21ab5d7b0416a/base-notebook/Dockerfile#L39-L42), but it is not available in Ubuntu 18.04 as apt package.  
 
-So to be able to use the `nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04` base image we need to modify the `base-notebook` and install `tini` in another way.
+So to be able to use the `nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04` base image we need to modify the `base-notebook` and install `tini` in another way.
 The modifications are available at https://github.com/paskino/docker-stacks/tree/base_image_ubuntu18.04
 
 Below a list of commands that will build the `paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu18.04`
@@ -30,40 +30,40 @@ cd ..
 # base notebook
 cd docker-stacks/base-notebook
 # change the base class with the ROOT_CONTAINER argument
-docker build --build-arg ROOT_CONTAINER=nvidia/cuda:11.5.0-cudnn8-devel-ubuntu18.04 .
+docker build --build-arg ROOT_CONTAINER=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 .
 # tag the created image
-docker tag 4dbe50ddc554 paskino/jupyter:base-notebook-cuda11-cudnn8-devel-ubuntu18.04
+docker tag 1aeb87839a04 paskino/jupyter:base-notebook-cuda11-cudnn8-devel-ubuntu18.04
 
 # minimal notebook
 cd ../minimal-notebook
 docker build --build-arg BASE_CONTAINER=paskino/jupyter:base-notebook-cuda11-cudnn8-devel-ubuntu18.04 .
-docker tag 89a140d2318c paskino/jupyter:minimal-notebook-cuda11-cudnn8-devel-ubuntu18.04
+docker tag b4466253f953 paskino/jupyter:minimal-notebook-cuda11-cudnn8-devel-ubuntu18.04
 
 # scipy-notebook
 cd ../scipy-notebook
 docker build --build-arg BASE_CONTAINER=paskino/jupyter:minimal-notebook-cuda11-cudnn8-devel-ubuntu18.04 .
-docker tag 36ca7783b57d paskino/jupyter:scipy-notebook-cuda11-cudnn8-devel-ubuntu18.04
+docker tag e1308264ed45 paskino/jupyter:scipy-notebook-cuda11-cudnn8-devel-ubuntu18.04
 
 # datascience-notebook
 cd ../datascience-notebook
 docker build --build-arg BASE_CONTAINER=paskino/jupyter:scipy-notebook-cuda11-cudnn8-devel-ubuntu18.04 .
-docker tag 5c63287f0aee paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu18.04
+docker tag 321b0d3d0367 paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu18.04
 ```
 
-Finally we have the base `datascience-notebook` with the `nvidia/cuda:11.5.0-cudnn8-devel-ubuntu18.04` base image.
+Finally we have the base `datascience-notebook` with the `nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04` base image.
 
 ### Start building SIRF
 
-Build the `sirf` target of the SIRF Dockerfile with the `nvidia/cuda:11.5.0-cudnn8-devel-ubuntu18.04` base image.
+Build the `sirf` target of the SIRF Dockerfile with the `nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04` base image.
 
 ```
 git clone git@github.com:SyneRBI/SIRF-SuperBuild.git
 cd SIRF-SuperBuild/docker
 
 # build standard SIRF docker
-docker build --build-arg BASE_IMAGE=nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --target sirf .
+docker build --build-arg BASE_IMAGE=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --target sirf .
 # tag as synerbi/sirf:sirf-core
-docker tag cd1ed7d07d11 synerbi/sirf:sirf-core
+docker tag 02c5f9dbff44 synerbi/sirf:sirf-core
 ```
 
 ### Putting things together
@@ -76,8 +76,8 @@ Notice that CIL is now installed via conda so the SuperBuild is set not to build
 
 ```
 cd SIRF-SuperBuild/docker
-docker build --build-arg BASE_IMAGE=paskino/jupyter:datascience-notebook-cuda10-ubuntu18.04 -f ../jupyterhub/Dockerfile .
-docker tag 4970647d72ea paskino/sirfcil:service-gpu
+docker build --build-arg BASE_IMAGE=paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu18.04 -f ../jupyterhub/Dockerfile .
+docker tag c9ce77f825eb paskino/sirfcil:service-gpu
 ```
 
 ### Testing
