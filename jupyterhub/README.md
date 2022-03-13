@@ -61,7 +61,7 @@ git clone git@github.com:SyneRBI/SIRF-SuperBuild.git
 cd SIRF-SuperBuild/docker
 
 # build standard SIRF docker
-docker build --build-arg BASE_IMAGE=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --target sirf .
+docker build --build-arg BASE_IMAGE=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DDEVEL_BUILD=ON -DBUILD_CIL=ON" --target sirf .
 # tag as synerbi/sirf:sirf-core
 docker tag 02c5f9dbff44 synerbi/sirf:sirf-core
 ```

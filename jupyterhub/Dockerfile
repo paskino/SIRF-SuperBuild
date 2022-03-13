@@ -4,7 +4,8 @@ FROM ${BASE_IMAGE} as base
 
 # Install CIL with all packages from conda: https://github.com/TomographicImaging/CIL#installation
 COPY requirements_conda_forge.txt . 
-RUN conda install -c conda-forge -c intel -c ccpi/label/dev -c ccpi -c astra-toolbox/label/dev --file requirements_conda_forge.txt
+# RUN conda install -c conda-forge -c intel -c ccpi/label/dev -c ccpi -c astra-toolbox/label/dev --file requirements_conda_forge.txt
+RUN conda install -c conda-forge -c intel -c ccpi --file requirements_conda_forge.txt
 
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage

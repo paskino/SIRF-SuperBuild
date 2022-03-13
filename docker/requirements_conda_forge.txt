@@ -1,5 +1,6 @@
-cil
-cil-astra=21.3.0
-ccpi-regulariser=21.0.0
+#cil
+#cil-astra=21.3.0
+#ccpi-regulariser=21.0.0
 tigre 
-tomophantom=1.4.10
+ipp
+#tomophantom=1.4.10
