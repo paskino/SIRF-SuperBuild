@@ -3,4 +3,8 @@
 #ccpi-regulariser=21.0.0
 tigre 
 ipp
+numpy
+scipy
+matplotlib
+h5py    
 #tomophantom=1.4.10
