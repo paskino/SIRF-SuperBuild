@@ -136,6 +136,10 @@ ARG EXTRA_BUILD_FLAGS="-DBUILD_CIL=OFF"
 RUN bash user_sirf-ubuntu.sh
 RUN rm user_sirf-ubuntu.sh
 
+USER root
+RUN apt install -y vim
+USER "${NB_USER}"
+
 # give everyone write and execute permission
 RUN chmod -R go+rwX /opt/SIRF-SuperBuild/INSTALL
 
