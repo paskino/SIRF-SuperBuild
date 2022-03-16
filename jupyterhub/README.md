@@ -61,9 +61,9 @@ git clone git@github.com:SyneRBI/SIRF-SuperBuild.git
 cd SIRF-SuperBuild/docker
 
 # build standard SIRF docker
-docker build --build-arg BASE_IMAGE=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DDEVEL_BUILD=ON -DBUILD_CIL=ON" --target sirf .
+ docker build --build-arg BASE_IMAGE=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DDEVEL_BUILD=ON -DBUILD_CIL=ON" --build-arg SIRF_SB_URL=https://github.com/paskino/SIRF-SuperBuild --build-arg SIRF_SB_TAG=create_berlin_hackathon_image --target sirf .
 # tag as synerbi/sirf:sirf-core
-docker tag 02c5f9dbff44 synerbi/sirf:sirf-core
+docker tag 17e9ef0afbd9 synerbi/sirf:sirf-core
 ```
 
 ### Putting things together
@@ -77,7 +77,7 @@ Notice that CIL is now installed via conda so the SuperBuild is set not to build
 ```
 cd SIRF-SuperBuild/docker
 docker build --build-arg BASE_IMAGE=paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu18.04 -f ../jupyterhub/Dockerfile .
-docker tag c9ce77f825eb paskino/sirfcil:service-gpu
+docker tag 3dc16b074598 paskino/sirfcil:service-gpu
 ```
 
 ### Testing
