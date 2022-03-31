@@ -18,7 +18,7 @@
 # play safe with an innocent prompt that also works in the Bourne shell
 export PS1='sirf$ '
 # Python (virtualenv)
-[ -f /opt/conda/bin/activate ] && . /opt/conda/bin/activate
+[ -f /opt/pyvenv/bin/activate ] && . /opt/pyvenv/bin/activate
 
 # SIRF env
 [ -f /opt/SIRF-SuperBuild/INSTALL/bin/env_sirf.sh ] && \
