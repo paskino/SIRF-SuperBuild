@@ -57,9 +57,10 @@ if [ "$PYTHON" = "miniconda" ]; then
   fi
   conda update -c conda-forge -y --all
   conda clean -y --all
-fi
-
-# Python (runtime)
-if [ -f requirements.txt ]; then
-  pip install -U -r requirements.txt
+  pip install git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools
+else
+  # Python (runtime)
+  if [ -f requirements.txt ]; then
+    pip install -U -r requirements.txt
+  fi
 fi
