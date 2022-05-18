@@ -73,11 +73,11 @@ If you want to build the image with CIL using Intel IPP library one needs to pas
 
 ```
 
-docker build --build-arg BASE_IMAGE=nvidia/cuda:10.2-cudnn8-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DBUILD_CIL_LITE=ON -DIPP_LIBRARY=/opt/conda/lib -DIPP_INCLUDE=/opt/conda/include" --build-arg SIRF_SB_URL="https://github.com/paskino/SIRF-SuperBuild.git" --build-arg SIRF_SB_TAG="CIL_pass_IPP_library" --target sirf . 
+ docker build --build-arg BASE_IMAGE=nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DBUILD_CIL=ON -DIPP_LIBRARY=/opt/conda/lib -DIPP_INCLUDE=/opt/conda/include" --build-arg SIRF_SB_URL="https://github.com/paskino/SIRF-SuperBuild.git" --build-arg SIRF_SB_TAG="jupyterhub_env" --build-arg NUM_PARALLEL_BUILDS=6 --target sirf .
 ```
 
 # tag as synerbi/sirf:sirf-core
-docker tag cd1ed7d07d11 synerbi/sirf:sirf-core
+docker tag 31f671786caf synerbi/sirf:sirf-core
 ```
 
 ### Putting things together
@@ -90,7 +90,7 @@ Notice that CIL is now installed via conda so the SuperBuild is set not to build
 
 ```
 cd SIRF-SuperBuild/docker
-docker build --build-arg BASE_IMAGE=paskino/jupyter:datascience-notebook-cuda10-cudnn8-devel-ubuntu18.04 -f ../jupyterhub/Dockerfile .
+docker build --build-arg BASE_IMAGE=paskino/jupyter:datascience-notebook-cuda10-cudnn7-devel-ubuntu18.04 -f ../jupyterhub/Dockerfile .
 docker tag 4970647d72ea paskino/sirfcil:service-gpu
 ```
 
