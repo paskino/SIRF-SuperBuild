@@ -1,7 +1,7 @@
 docopt
 matplotlib
 git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools
-numpy=1.20
+numpy==1.20
 scipy
 nibabel
 deprecation
