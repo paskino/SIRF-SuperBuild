@@ -6,3 +6,4 @@ scipy
 nibabel
 deprecation
 nose
+Cython
