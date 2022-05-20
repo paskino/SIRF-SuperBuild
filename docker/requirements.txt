@@ -11,3 +11,4 @@ dxchange
 olefile
 pywavelets
 tqdm
+h5py
