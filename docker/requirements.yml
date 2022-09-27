@@ -1,0 +1,34 @@
+name: base
+channels:
+  - conda-forge
+  - intel
+  - ccpi
+  - defaults
+dependencies:
+  - setuptools
+  - wheel
+  - numpy        # CIL
+  - scipy        # CIL
+  - docopt
+  - matplotlib
+  - Cython       # CIL
+  - h5py         # CIL
+  - Pillow       # CIL
+  - wget         # CIL
+  - six          # CIL
+  - olefile      # CIL
+  - opencv       # CIL
+  - numba        # CIL
+  - pandas
+  - tifffile
+  - nibabel
+  - deprecation
+  - nose
+  - ipp
+  - ipp-devel
+  - ipp-include
+  - tigre
+  - pip:
+    - git+https://github.com/data-exchange/dxchange.git  # CIL
+    - git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools
+  
