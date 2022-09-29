@@ -2,9 +2,17 @@ ARG BASE_IMAGE=ubuntu:18.04
 # paskino/jupyter   datascience-notebook-cuda11
 FROM ${BASE_IMAGE} as base
 
+USER root
+RUN apt-get install -yq --no-install-recommends ca-certificates
+
+USER root
+# RUN apt-get install -yq --no-install-recommends ca-certificates
+COPY update_nvidia_keys.sh .
+RUN bash update_nvidia_keys.sh && rm update_nvidia_keys.sh
+
 # Install CIL with all packages from conda: https://github.com/TomographicImaging/CIL#installation
-COPY requirements_conda_forge.txt . 
-RUN conda install -c conda-forge -c intel -c ccpi -c astra-toolbox --file requirements_conda_forge.txt
+COPY requirements.yml . 
+RUN conda env update --file requirements.yml && rm requirements.yml
 
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage
@@ -24,6 +32,11 @@ ENV SIRF_INSTALL_PATH "/opt/SIRF-SuperBuild/INSTALL"
 ENV SIRF_EXERCISES_DATA_PATH "/mnt/materials/SIRF/Fully3D/SIRF/"
 ENV SIRF_PATH "/opt/SIRF-SuperBuild/sources/SIRF"
 RUN echo $PATH
+
+USER root
+# https://github.com/NVIDIA/nvidia-docker/issues/1624#issuecomment-1084052469
+RUN rm /etc/apt/sources.list.d/cuda.list 
+
 
 # Make sure the image has the same libraries as the standard SIRF docker image
 # Add to the docker image the appropriate stuff
@@ -53,9 +66,6 @@ RUN rm build_system-ubuntu.sh
 RUN cp /tini /usr/bin
 RUN chmod +x /usr/bin/tini
 
-# install requirements skipping CIL ones that are taken care of by conda
-RUN conda install deprecation nibabel nose docopt -c conda-forge -c intel -c astra-toolbox/label/dev -c ccpi
-RUN python -m pip install git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools
 
 # switch back to 
 USER jovyan
