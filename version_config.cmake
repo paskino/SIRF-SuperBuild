@@ -208,7 +208,8 @@ if (DEVEL_BUILD)
   
 
 else()
-  set(DEFAULT_SIRF_TAG v3.3.0)
+  set(DEFAULT_SIRF_URL https://github.com/paskino/SIRF )
+  set(DEFAULT_SIRF_TAG pytest)
 
   ## STIR
   set(DEFAULT_STIR_URL https://github.com/UCL/STIR )

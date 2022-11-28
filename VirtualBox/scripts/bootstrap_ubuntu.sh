@@ -87,7 +87,7 @@ fi
 cd $userHOME/devel
 
 if [ ! -d $userHOME/devel/SIRF-SuperBuild ]; then
-  git clone https://github.com/SyneRBI/SIRF-SuperBuild.git
+  git clone https://github.com/paskino/SIRF-SuperBuild.git
   cd SIRF-SuperBuild
 else
   cd SIRF-SuperBuild
@@ -95,4 +95,4 @@ else
 fi
 
 chown -R $SIRFUSERNAME:users $userHOME
-sudo -u $SIRFUSERNAME -H bash $userHOME/devel/SIRF-SuperBuild/VirtualBox/scripts/UPDATE.sh -s
+sudo -u $SIRFUSERNAME -H bash $userHOME/devel/SIRF-SuperBuild/VirtualBox/scripts/UPDATE.sh -s -t test_pytest
