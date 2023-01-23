@@ -63,7 +63,7 @@ Build the `sirf` target of the SIRF Dockerfile with the `nvidia/cuda:11.7.1-cudn
 
 ```
 git clone git@github.com:SyneRBI/SIRF-SuperBuild.git
-cd SIRF-SuperBuild/docker
+cd SIRF-SuperBuild/
 
 # build standard SIRF docker
 docker build --build-arg BASE_IMAGE=nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --target sirf .
@@ -79,13 +79,7 @@ Please see [here](https://github.com/SyneRBI/SIRF-SuperBuild#building-ccpi-cil) 
 
  docker build --build-arg BASE_IMAGE=nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DBUILD_CIL=ON -DIPP_LIBRARY=/opt/conda/lib -DIPP_INCLUDE=/opt/conda/include" --build-arg SIRF_SB_URL="https://github.com/paskino/SIRF-SuperBuild.git" --build-arg SIRF_SB_TAG="jupyterhub_env" --build-arg NUM_PARALLEL_BUILDS=6 --target sirf .
 ```
-# build for PSMRTBP2022
-```
- nohup docker build --build-arg BASE_IMAGE=nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DBUILD_CIL=ON -DIPP_LIBRARY=/opt/conda/lib -DIPP_INCLUDE=/opt/conda/include -DSTIR_URL=https://github.com/UCL/STIR.git -DSTIR_TAG=master -DBUILD_STIR_EXECUTABLES=ON -DSIRF_URL=https://github.com/SyneRBI/SIRF.git -DSIRF_TAG=lm-recon -Dparallelproj_TAG=v0.8" --build-arg SIRF_SB_URL="https://github.com/paskino/SIRF-SuperBuild.git" --build-arg SIRF_SB_TAG="jupyterhub_env" --build-arg NUM_PARALLEL_BUILDS=6 --target sirf . > build_jupyterhub_lm.log &
 
-# tag as synerbi/sirf:sirf-core
-docker tag 31f671786caf synerbi/sirf:sirf-core
-```
 
 ### Putting things together
 
