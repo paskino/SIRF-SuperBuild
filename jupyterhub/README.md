@@ -71,12 +71,10 @@ docker build --build-arg BASE_IMAGE=nvidia/cuda:10.2-cudnn8-devel-ubuntu18.04 --
 
 ```
 
-#### Installing CIL via conda
-The command above will install cil via conda (using requirements_conda-forge.txt) and will install the latest stable release. 
+#### Building CIL
 
+Please see [here](https://github.com/SyneRBI/SIRF-SuperBuild#building-ccpi-cil) for detailed info on the command below.
 
-#### Building CIL as part of the SIRF SuperBuild
-If you want to build the image with CIL using Intel IPP library one needs to pass the location of the IPP library down to CIL's CMake, this can be done with the following command. 
 
 ```
 
@@ -95,8 +93,6 @@ docker tag 31f671786caf synerbi/sirf:sirf-core
 
 
 To install SIRF we can literally _copy_ the SIRF INSTALL directory to the `datascience-notebook` image and set the required environment variables.
-
-Notice that CIL is now installed via conda so the SuperBuild is set not to build it.
 
 ```
 cd SIRF-SuperBuild/docker

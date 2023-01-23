@@ -1,13 +1,70 @@
 # ChangeLog
-# v3.x.x
+## v3.4.0
+- Removed CIL-ASTRA as it has been merged into CIL code base.
+- Added python-opencv , pytest, pytest-cov and coverage to docker requirements.txt
+- docker images updates
+  - Ubuntu: 22.04
+  - added requirements.yml and requirements-service.yml to handle dependencies for conda python
+  - updates to use mamba
+  - use jupyterlab as opposed to notebook in the "service" images
+  - CMake: v3.25.1
+- VM updates
+  - Ubuntu: 22.04
+  - update configuration and documentation to use jupyterlab as opposed to the notebook server
+  - CMake: 3.21.3
+  - fixes documentation
+  - use the VMSVGA graphics controller
+  - use environment variables in Vagrantfile for easier building
+- updated versions:
+  - SIRF: v3.4.0
+  - CIL: a6062410028c9872c5b355be40b96ed1497fed2a > 22.1.0
+  - GTest: 1.12.1
+  - glog: 0.6.0
+  - parallelproj: v1.2.13
+  - STIR: rel_5.1.0
+  - Boost: 1.78.0
+
+## v3.3.1
+- VM: 
+   - "update_VM.sh -s" (i.e. "UPDATE.sh -s") no longer runs configure_gnome.sh. If you have a very old VM, run it manually instead.
+   - Updates to run using docker scripts
+   - installs custom pip and all python prerequisites with pip
+   - Bugfix in finding cython and python in UPDATE.sh
+   - general refresh of scripts etc
+   - move `zero_fill.sh` from `first_run.sh` and move it to a new `clean_before_VM_export.sh` script, which also removes build files to make the exported VM smaller.
+- docker and VM:
+   - install `uuid-dev` such that we're prepared for installing ROOT
+   - no longer force numpy<=1.20
+- CMake:
+   - FindCython allows hints
+   
+## v3.3.0
+- known problems:
+   - VM and jupyterhub scripts need merging various fixes
+- gemeric *.cmake fixes:
+   - update to the ASTRA build script
+   - fix/add minimum versions for various packages
+   - improve finding GTest
+- Windows
+   - Boost build add regex and random
+   - install `env_sirf.PS1` and `.bat` files (similar to the existing `.sh` and `.csh` files)
+- docker:
+   - fix problems with CUDA repo keys
+   - minor fixes to scripts for use elsewhere (including preparation for more recent Ubuntu)
 - VM: 
   - set BUILD_CIL=ON
+- add CITATION.cff (and remove .zenodo.json)
+- added numba as dependency in docker files
 - updated versions:
-  - STIR: 5.0.1
-  - parallelproj: v1.0
+  - SIRF: 3.3.0
+  - STIR: 5.0.2
+  - parallelproj: v0.8
+  - CCPi Regularisation: v21.0.0
+  - CIL: v21.4.1 (CIL devel build to commit hash ef66083de231492f9571f5512b33068f6950e877 )
+
 
 ## v3.2.0
-- Moved the VM to this repo
+- Moved the VM scripts etc to this repo
 - CMake: removed USE_SYSTEM_siemens_to_ismrmrd
 - CMake: added required versions for STIR, NIFTYREG, ISMRMRD.
 - Drop Python 2 support

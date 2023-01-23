@@ -29,15 +29,15 @@ if (APPLE) # really should be checking for CLang
     set(Boost_URL http://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_1_68_0.zip)
     set(Boost_MD5 f4096c4583947b0eb103c8539f1623a3)
 else()
-     set(Boost_VERSION 1.72.0)
+     set(Boost_VERSION 1.78.0)
      if (BUILD_GADGETRON)
-       set(Boost_REQUIRED_VERSION 1.65.1)
+       set(Boost_REQUIRED_VERSION 1.71.0)
      else()
        # Ubutnu 16.04 version should be fine
        set(Boost_REQUIRED_VERSION 1.58.0)
      endif()
-     set(Boost_URL http://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_1_72_0.zip)
-     set(Boost_MD5 93cf8511f2e9b4456e5178cb07fc829d)
+     set(Boost_URL http://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_1_78_0.zip)
+     set(Boost_MD5 e193e5089060ed6ce5145c8eb05e67e3)
 endif()
 
 ## Armadillo
@@ -96,11 +96,11 @@ option(DEVEL_BUILD "Use current versions of major packages" OFF)
 
 ## Googletest
 set(GTest_URL https://github.com/google/googletest )
-set(GTest_TAG release-1.11.0)
+set(GTest_TAG release-1.12.1)
 
 ## glog
 set(DEFAULT_glog_URL https://github.com/google/glog )
-set(DEFAULT_glog_TAG v0.3.5)
+set(DEFAULT_glog_TAG v0.6.0)
 
 ## ITK
 set(DEFAULT_ITK_URL https://github.com/InsightSoftwareConsortium/ITK.git)
@@ -140,7 +140,7 @@ set(DEFAULT_NiftyPET_TAG 70b97da0a4eea9445e34831f7393947a37bc77e7)
 
 ## parallelproj
 set(DEFAULT_parallelproj_URL https://github.com/gschramm/parallelproj )
-set(DEFAULT_parallelproj_TAG v1.0.0)
+set(DEFAULT_parallelproj_TAG v1.2.13)
 
 ## SIRF-Contribs
 set(DEFAULT_SIRF-Contribs_URL https://github.com/SyneRBI/SIRF-Contribs )
@@ -154,16 +154,20 @@ set(DEFAULT_JSON_URL https://github.com/nlohmann/json.git )
 set(DEFAULT_JSON_TAG v3.10.4)
 
 # CCPi CIL
+# CIL-ASTRA has been merged into CIL from acf3ddf5c61b8e216fe7891d7720f9bbd436c9b3
+
+# minimum supported version of CIL supported is 22.0.0 or from commit acf3ddf5c61b8e216fe7891d7720f9bbd436c9b3
+# due to a change in CIL's building mechanism, however due to a unit test failure the minimum CIL required
+# commit is a6062410028c9872c5b355be40b96ed1497fed2a
 set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
-set(DEFAULT_CIL_TAG "v21.4.1")
-set(DEFAULT_CIL-ASTRA_URL https://github.com/TomographicImaging/CIL-ASTRA.git)
-set(DEFAULT_CIL-ASTRA_TAG "v21.4.0")
+set(DEFAULT_CIL_TAG a6062410028c9872c5b355be40b96ed1497fed2a)
+
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
-set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v20.09")
+set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v21.0.0")
 
 # CERN ROOT
 set(DEFAULT_ROOT_URL https://github.com/root-project/root)
-set(DEFAULT_ROOT_TAG "v6-24-06")
+set(DEFAULT_ROOT_TAG "v6-26-10")
 
 # ACE
 set(DEFAULT_ACE_URL https://github.com/paskino/libace-conda)
@@ -200,18 +204,15 @@ if (DEVEL_BUILD)
 
   # CCPi CIL
   set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
-  set(DEFAULT_CIL_TAG origin/master)
-  set(DEFAULT_CIL-ASTRA_URL https://github.com/TomographicImaging/CIL-ASTRA.git)
-  set(DEFAULT_CIL-ASTRA_TAG origin/master)
-  set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
-  set(DEFAULT_CCPi-Regularisation-Toolkit_TAG origin/master)
+  set(DEFAULT_CIL_TAG origin/master )
+  
 
 else()
-  set(DEFAULT_SIRF_TAG v3.2.0)
-
+  set(DEFAULT_SIRF_TAG v3.4.0)
+  
   ## STIR
   set(DEFAULT_STIR_URL https://github.com/UCL/STIR )
-  set(DEFAULT_STIR_TAG release_5.0)
+  set(DEFAULT_STIR_TAG rel_5.1.0)
 
   # ismrmrd
   set(DEFAULT_ISMRMRD_TAG v1.7.0)
@@ -260,8 +261,6 @@ set(CCPi-Regularisation-Toolkit_URL ${DEFAULT_CCPi-Regularisation-Toolkit_URL} C
 set(CCPi-Regularisation-Toolkit_TAG ${DEFAULT_CCPi-Regularisation-Toolkit_TAG} CACHE STRING ON)
 set(CIL_URL ${DEFAULT_CIL_URL} CACHE STRING ON)
 set(CIL_TAG ${DEFAULT_CIL_TAG} CACHE STRING ON)
-set(CIL-ASTRA_URL ${DEFAULT_CIL-ASTRA_URL} CACHE STRING ON)
-set(CIL-ASTRA_TAG ${DEFAULT_CIL-ASTRA_TAG} CACHE STRING ON)
 set(astra-toolbox_URL ${DEFAULT_astra-toolbox_URL} CACHE STRING ON)
 set(astra-toolbox_TAG ${DEFAULT_astra-toolbox_TAG} CACHE STRING ON)
 set(astra-python-wrapper_URL ${DEFAULT_astra-toolbox_URL} CACHE STRING ON)
@@ -305,7 +304,6 @@ mark_as_advanced(SIRF_URL SIRF_TAG STIR_URL STIR_TAG
   glog_URL glog_TAG
   NIFTYREG_URL NIFTYREG_TAG
   CIL_URL CIL_TAG
-  CIL-ASTRA_URL CIL-ASTRA_TAG
   CCPi-Regularisation-Toolkit_URL CCPi-Regularisation-Toolkit_TAG
   NiftyPET_URL NiftyPET_TAG
   parallelproj_URL parallelproj_TAG

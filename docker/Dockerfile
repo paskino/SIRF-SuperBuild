@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=ubuntu:18.04
+ARG BASE_IMAGE=ubuntu:22.04
 FROM ${BASE_IMAGE} as base
 
 LABEL \
@@ -12,8 +12,9 @@ LABEL \
 
 USER root
 ENV DEBIAN_FRONTEND noninteractive
-# https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
+
+COPY update_nvidia_keys.sh .
+RUN bash update_nvidia_keys.sh && rm update_nvidia_keys.sh
 
 COPY raw-ubuntu.sh .
 RUN bash raw-ubuntu.sh
@@ -104,10 +105,10 @@ USER ${NB_USER}:${NB_GROUP}
 
 # Python (virtualenv or conda)
 COPY requirements.txt .
-COPY requirements_conda_forge.txt .
+COPY requirements.yml .
 COPY user_python-ubuntu.sh .
 RUN PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE} PYTHON_INSTALL_DIR=${PYTHON_INSTALL_DIR} bash user_python-ubuntu.sh  && \
-    rm user_python-ubuntu.sh requirements.txt requirements_conda_forge.txt
+    rm user_python-ubuntu.sh requirements.txt requirements.yml
 
 
 # ccache
@@ -116,10 +117,12 @@ COPY devel/.ccache/ /opt/ccache/
 # give everyone write permisions
 RUN chmod -R go+w /opt/ccache
 
+
 # SIRF
 USER "${NB_USER}"
 
 RUN ccache -o cache_dir=/opt/ccache
+
 COPY user_sirf-ubuntu.sh .
 
 # SIRF-SuperBuild version
@@ -163,9 +166,12 @@ ARG HOME="/home/${NB_USER}"
 USER "${NB_USER}"
 
 COPY requirements-service.txt .
+COPY requirements-service.yml .
+COPY requirements.yml .
 COPY user_service-ubuntu.sh .
-RUN bash user_service-ubuntu.sh
-RUN rm user_service-ubuntu.sh requirements-service.txt
+COPY install-sirf-exercises-dep.py .
+RUN PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE} PYTHON_INSTALL_DIR=${PYTHON_INSTALL_DIR} bash user_service-ubuntu.sh
+RUN rm user_service-ubuntu.sh requirements-service.txt requirements-service.yml install-sirf-exercises-dep.py
 
 USER root
 COPY download_data.sh /usr/local/bin/
@@ -197,6 +203,7 @@ RUN apt-get update --yes && \
     wget \
     ca-certificates \
     sudo \
+    tini \
     locales \
     fonts-liberation \
     run-one && \
@@ -207,10 +214,11 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
     sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers
 
-# Add Tini (note: no tini apt-package yet in Ubuntu 18.04)
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
+## Add Tini (note: no tini apt-package yet in Ubuntu 18.04)
+## but now commented out as we've moved to more recent Ubuntu
+#ENV TINI_VERSION v0.19.0
+#ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+#RUN chmod +x /tini
 
 # TODO install jupyterhub requirements
 

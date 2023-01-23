@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
-set -ev
+set -e
 # SIRF external dependencies
 apt-get update -qq
 APT_GET_INSTALL="apt-get install -yq --no-install-recommends"
 
+${APT_GET_INSTALL} software-properties-common # needed for add-apt-repository
+add-apt-repository -y universe # needed for hdf5 for instance
+
+# Fix a problem on Ubuntu 22.04 (or at least the one on GitHub Actions)
+# of a pinned version of libunwind that then creates problems later
+# (we allow the remove/install to failthough)
+apt-get remove libunwind-14 -y || true
+${APT_GET_INSTALL} libunwind || true
+
 # echo "Installing boost 1.65 or later"
 # first find current boost version (if any)
-# the 'tail' makes sure we use the last one listed by apt-cache in case there is more than 1 version
 function find_boost_version() {
-  tmp=$(apt-cache search libboost|grep ALL|egrep libboost[1-9]|tail -n 1)
+  tmp=$(apt-cache search libboost|egrep 'libboost[1-9].*-dev'|tail -n 1)
   boost_major=${tmp:8:1}
   boost_minor=${tmp:10:2}
 }
@@ -29,6 +37,9 @@ else
     # packaged boost is too old
     # we need to find a ppa that has it. This is unsafe and likely prone to falling over
     # when the ppa is no longer maintained
+    echo "Please submit a PR with a recent PPA for boost for your OS."
+    exit 1
+    # the mhier PPA is no longer supported
     echo "trying to find boost from ppa:mhier/libboost-latest"
     ${APT_GET_INSTALL} software-properties-common
     $SUDO add-apt-repository -y  ppa:mhier/libboost-latest
@@ -45,6 +56,7 @@ fi
 ${APT_GET_INSTALL} \
   libfftw3-dev         \
   libhdf5-serial-dev   \
+  hdf5-helpers         \
   swig
 
 # doxygen related packages
@@ -64,5 +76,9 @@ ${APT_GET_INSTALL} \
   autogen              \
   autoconf             \
   libtool
+
+# ROOT external dependencies
+${APT_GET_INSTALL} \
+  uuid-dev
 
 apt-get clean

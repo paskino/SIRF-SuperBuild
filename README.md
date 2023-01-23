@@ -10,6 +10,11 @@ other packages useful for PET/MR data processing.
 Note that there is still a small number of libraries that are not installed
 by the SuperBuild, [see below for more info for your operating system](#os-specific-information).
 
+In addition, this repository also contains the files for [creating docker images](docker/README.md),
+a [VirtualBox VM](VirtualBox/README.md) as well as (probably outdated) files for creating [cloud instances
+on Azure via TerraForm](cloud/terraform/azure/README.md). See their respective READMEs. The rest of this README
+describes how to build via CMake.
+
 ## Table of Contents
 
 1. [Dependencies](#Dependencies)
@@ -338,10 +343,14 @@ Notice that other packages may look for a blas implementation issuing CMake's [`
 
 ### Building CCPi CIL
 
-It is possible to build the [CCPi Core Imaging Library CIL](https://www.ccpi.ac.uk/CIL) as part of the SuperBuild. The functionality of `CIL` can be expanded by plugins. Currently available: [`CCPi-Regularisation`](https://github.com/vais-ral/CCPi-Regularisation-Toolkit), [`CIL-ASTRA`](https://github.com/TomographicImaging/CIL-ASTRA), [`TomoPhantom`](https://github.com/dkazanc/TomoPhantom) and [`TIGRE`](https://github.com/CERN/TIGRE)). There are 2 options: 
+It is possible to build the [CCPi Core Imaging Library CIL](https://www.ccpi.ac.uk/CIL) as part of the SuperBuild. The functionality of `CIL` can be expanded by plugins. Currently available: [`CCPi-Regularisation`](https://github.com/vais-ral/CCPi-Regularisation-Toolkit), [`TomoPhantom`](https://github.com/dkazanc/TomoPhantom) [ASTRA-toolbox](https://github.com/astra-toolbox/astra-toolbox) and [`TIGRE`](https://github.com/CERN/TIGRE)). 
 
-1. `BUILD_CIL` will build `CIL` and all the following plugins: `CIL-ASTRA`, `CCPi-Regularisation`, [ASTRA-toolbox](https://github.com/astra-toolbox/astra-toolbox) and `TomoPhantom`
-2. `BUILD_CIL_LITE` will build `CIL` with the `CCPi-Regularisation` plugins.
+There is one mandatory flag and 2 optional: 
+
+
+- `BUILD_CIL=ON`, will build `CIL` and all the following plugins: `CCPi-Regularisation` and `TomoPhantom`; default `OFF`
+ - Optional `IPP_LIBRARY=<location of IPP shared libraries>` and `IPP_INCLUDE=<location of IPP includes>` if you want to build CIL with [IPP](https://www.intel.com/content/www/us/en/developer/tools/oneapi/ipp.html#gs.dnfk5r) support for optimised [FBP/FDK](https://github.com/TomographicImaging/CIL#dependency) . 
+ - Optional `BUILD_ASTRA=ON`, if you want to use CIL for CT reconstruction with the ASTRA-toolbox engine. Default `OFF` 
 
 ### Passing CMAKE arguments to specific projects
 
@@ -371,6 +380,9 @@ cmake ../SIRF-SuperBuild -DGadgetron_EXTRA_CMAKE_ARGS:STRING="-DBUILD_PYTHON_SUP
 ### Building with CUDA
 
 Some dependencies like Gadgetron, NiftyPET and Parallelproj require building parts of their code base with CUDA. It has been found that version [10.1 update 1](https://github.com/gadgetron/gadgetron/issues/792#issuecomment-786481256) works, but following updates of 10.1 and 10.2 do not build Gadgetron. It is reported that version CUDA toolkit version 11 works. We have not tested lower versions of the toolkit yet.
+
+Note that if you want to use the `clang` compiler and CUDA, you likely will have to set the `CUDAHOSTCXX` environment variable (before calling CMake), see also
+https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_HOST_COMPILER.html.
 
 ## Notes
 
