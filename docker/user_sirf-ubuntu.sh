@@ -17,9 +17,9 @@ INSTALL_DIR="${1:-/opt}"
 # set default for running ctest during the build
 : ${RUN_CTEST:=1}
 
-git clone "$SIRF_SB_URL" --recursive "$INSTALL_DIR"/SIRF-SuperBuild
+# git clone "$SIRF_SB_URL" --recursive "$INSTALL_DIR"/SIRF-SuperBuild
 cd $INSTALL_DIR/SIRF-SuperBuild
-git checkout "$SIRF_SB_TAG"
+# git checkout "$SIRF_SB_TAG"
 
 COMPILER_FLAGS="-DCMAKE_C_COMPILER='$(which gcc)' -DCMAKE_CXX_COMPILER='$(which g++)'"
 g++ --version
