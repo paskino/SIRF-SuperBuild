@@ -27,7 +27,7 @@ fi
 case "$PYTHON" in
 miniconda)
   # miniconda
-  curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh
+  curl https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh > miniconda.sh
   echo -e "\nyes\n${INSTALL_DIR}\nno" | bash miniconda.sh
   rm miniconda.sh
   source "$INSTALL_DIR"/bin/activate
