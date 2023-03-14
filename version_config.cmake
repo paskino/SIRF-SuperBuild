@@ -123,8 +123,8 @@ set(DEFAULT_siemens_to_ismrmrd_URL https://github.com/ismrmrd/siemens_to_ismrmrd
 set(DEFAULT_siemens_to_ismrmrd_TAG b87759e49e53dab4939147eb52b7a0e6465f3d04)
 
 ## Gadgetron
-set(DEFAULT_Gadgetron_URL https://github.com/SyneRBI/gadgetron )
-set(DEFAULT_Gadgetron_TAG add_include_limits)
+set(DEFAULT_Gadgetron_URL https://github.com/gadgetron/gadgetron )
+set(DEFAULT_Gadgetron_TAG 0670db847aca8df629b2005c1b23512dda84f175)
 
 ## ASTRA
 set(DEFAULT_astra-toolbox_URL https://github.com/astra-toolbox/astra-toolbox )
@@ -156,7 +156,7 @@ set(DEFAULT_JSON_TAG v3.10.4)
 # CCPi CIL
 # minimum supported version of CIL supported is > 22.1.0 or from commit a6062410028c9872c5b355be40b96ed1497fed2a
 set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
-set(DEFAULT_CIL_TAG e3ccbc56788b59cae74ab59e30ae656dae18a07e)
+set(DEFAULT_CIL_TAG 0fa149a1c09cae1f5b6648a369b38117e83dd280)
 
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
 set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v21.0.0")
