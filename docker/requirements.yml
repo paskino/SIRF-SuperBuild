@@ -10,7 +10,7 @@ dependencies:
   - wheel
   - pytest
   - pytest-cov
-  - numpy        # CIL
+  - numpy=1.22        # CIL
   - scipy=1.7.3  # CIL prevents `GLIBCXX_3.4.30' not found
   - docopt
   - matplotlib
@@ -30,7 +30,7 @@ dependencies:
   - ipp
   - ipp-devel
   - ipp-include
-  - tigre
+  - tigre=2.4
+  - dxchange
   - pip:
-    - git+https://github.com/data-exchange/dxchange.git  # CIL
     - git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools

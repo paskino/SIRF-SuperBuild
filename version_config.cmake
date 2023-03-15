@@ -156,7 +156,7 @@ set(DEFAULT_JSON_TAG v3.10.4)
 # CCPi CIL
 # minimum supported version of CIL supported is > 22.1.0 or from commit a6062410028c9872c5b355be40b96ed1497fed2a
 set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
-set(DEFAULT_CIL_TAG e3ccbc56788b59cae74ab59e30ae656dae18a07e)
+set(DEFAULT_CIL_TAG 0fa149a1c09cae1f5b6648a369b38117e83dd280)
 
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
 set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v22.0.0")
