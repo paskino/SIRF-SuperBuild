@@ -159,7 +159,8 @@ set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
 set(DEFAULT_CIL_TAG 0fa149a1c09cae1f5b6648a369b38117e83dd280)
 
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
-set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v22.0.0")
+# Version > 22.0.0 
+set(DEFAULT_CCPi-Regularisation-Toolkit_TAG 96b59636e045e9d339dfde01b2fac84bf8fae432)
 
 # CERN ROOT
 set(DEFAULT_ROOT_URL https://github.com/root-project/root)
