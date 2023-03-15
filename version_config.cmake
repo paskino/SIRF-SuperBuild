@@ -132,7 +132,7 @@ set(DEFAULT_astra-toolbox_TAG origin/master)
 
 ## TomoPhantom
 set(DEFAULT_TomoPhantom_URL https://github.com/dkazanc/TomoPhantom )
-set(DEFAULT_TomoPhantom_TAG v1.4)
+set(DEFAULT_TomoPhantom_TAG v2.0.0)
 
 ## NiftyPET
 set(DEFAULT_NiftyPET_URL https://github.com/pjmark/NIPET )
