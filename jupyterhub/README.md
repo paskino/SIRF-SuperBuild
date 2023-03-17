@@ -79,6 +79,8 @@ Please see [here](https://github.com/SyneRBI/SIRF-SuperBuild#building-ccpi-cil) 
 ```
 
  docker build --build-arg BASE_IMAGE=nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04 --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg EXTRA_BUILD_FLAGS="-DBUILD_CIL=ON -DIPP_LIBRARY=/opt/conda/lib -DIPP_INCLUDE=/opt/conda/include" --build-arg SIRF_SB_URL="https://github.com/paskino/SIRF-SuperBuild.git" --build-arg SIRF_SB_TAG="jupyterhub_env" --build-arg NUM_PARALLEL_BUILDS=6 --target sirf .
+
+ docker build --build-arg PYTHON_INSTALL_DIR=/opt/conda --build-arg SIRF_SB_TAG=BYOD-Hackathon --build-arg SIRF_SB_URL=https://github.com/paskino/SIRF-SuperBuild --build-arg NUM_PARALLEL_BUILDS=4 --build-arg EXTRA_BUILD_FLAGS="-DBUILD_CIL=ON -DIPP_LIBRARY=/opt/conda/lib -DIPP_INCLUDE=/opt/conda/include -DBUILD_ASTRA=OFF -DUSE_SYSTEM_Boost=OFF" --build-arg REMOVE_BUILD_FILES=1 --build-arg RUN_CTEST=0 --build-arg BASE_IMAGE=nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04 --target sirf .
 ```
 
 
@@ -99,4 +101,10 @@ The cloud is set to update the image `paskino/sirfcil:service-gpu`, therefore it
 ```
 docker tag 4970647d72ea paskino/sirfcil:service-gpu
 ```
+### Production
 
+```
+cd SIRF-SuperBuild
+docker build --build-arg BASE_IMAGE=paskino/jupyter:datascience-notebook-cuda11-cudnn8-devel-ubuntu22.04 -f jupyterhub/Dockerfile -t harbor.stfc.ac.uk/imaging-tomography/sirfcil:jupyterhub-gpu .
+docker push harbor.stfc.ac.uk/imaging-tomography/sirfcil:jupyterhub-gpu
+```
