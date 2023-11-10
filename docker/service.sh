@@ -31,8 +31,6 @@ stop_service()
 pushd $SIRF_PATH/../..
 
 echo "start gadgetron"
-GCONFIG=./INSTALL/share/gadgetron/config/gadgetron.xml
-[ -f "$GCONFIG" ] || cp "$GCONFIG".example "$GCONFIG"
 [ -f ./INSTALL/bin/gadgetron ] \
   && ./INSTALL/bin/gadgetron >& ~/gadgetron.log&
 
@@ -55,7 +53,6 @@ if [ ! -f ~/.jupyter/jupyter_server_config.py ]; then
   echo "c.ServerApp.password = u'sha1:cbf03843d2bb:8729d2fbec60cacf6485758752789cd9989e756c'" \
   > ~/.jupyter/jupyter_server_config.py
 fi
-
 
 # serve a master notebook
 jupyter notebook --ip 0.0.0.0 --port $JUPYTER_PORT --no-browser \

@@ -21,26 +21,18 @@
 #
 #=========================================================================
 
-## BOOST  # Gadgetron needs at least 1.65
-if (APPLE) # really should be checking for CLang
-	# Boost 1.65 contains a bug for recent Clang https://github.com/SyneRBI/SIRF-SuperBuild/issues/170
-    set(Boost_VERSION 1.68.0)
-    set(Boost_REQUIRED_VERSION 1.66.0)
-    set(Boost_URL http://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_1_68_0.zip)
-    set(Boost_MD5 f4096c4583947b0eb103c8539f1623a3)
+## BOOST
+if (BUILD_GADGETRON)
+# https://github.com/gadgetron/gadgetron/blob/12ffc43debb9bad2e170713006d29dea78d966bf/CMakeLists.txt#L205-L209
+  set(Boost_REQUIRED_VERSION 1.71.0)
 else()
-     # Use version 1.78.0 version
-     set(Boost_VERSION 1.78.0)
-     if (BUILD_GADGETRON)
-     # https://github.com/gadgetron/gadgetron/blob/12ffc43debb9bad2e170713006d29dea78d966bf/CMakeLists.txt#L205-L209
-       set(Boost_REQUIRED_VERSION 1.71.0)
-     else()
-       # Ubutnu 22.04 version should be fine
-       set(Boost_REQUIRED_VERSION 1.58.0)
-     endif()
-     set(Boost_URL http://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_1_78_0.zip)
-     set(Boost_MD5 e193e5089060ed6ce5145c8eb05e67e3)
+  # ISMRMRD needs more recent 1.68.0 so let's just say 1.71.0 as well
+  set(Boost_REQUIRED_VERSION 1.71.0)
 endif()
+set(Boost_VERSION 1.78.0)
+set(Boost_URL http://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_1_78_0.zip)
+set(Boost_MD5 e193e5089060ed6ce5145c8eb05e67e3)
+
 
 ## Armadillo
 set(Armadillo_URL https://downloads.sourceforge.net/project/arma/armadillo-9.800.2.tar.xz)
@@ -132,7 +124,7 @@ set(DEFAULT_astra-toolbox_TAG origin/master)
 
 ## TomoPhantom
 set(DEFAULT_TomoPhantom_URL https://github.com/dkazanc/TomoPhantom )
-set(DEFAULT_TomoPhantom_TAG v1.4)
+set(DEFAULT_TomoPhantom_TAG v2.0.0)
 
 ## NiftyPET
 set(DEFAULT_NiftyPET_URL https://github.com/pjmark/NIPET )
@@ -156,10 +148,10 @@ set(DEFAULT_JSON_TAG v3.10.4)
 # CCPi CIL
 # minimum supported version of CIL supported is > 22.1.0 or from commit a6062410028c9872c5b355be40b96ed1497fed2a
 set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL.git)
-set(DEFAULT_CIL_TAG 0fa149a1c09cae1f5b6648a369b38117e83dd280)
+set(DEFAULT_CIL_TAG v23.1.0)
 
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/vais-ral/CCPi-Regularisation-Toolkit.git)
-set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v21.0.0")
+set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v22.0.0")
 
 # CERN ROOT
 set(DEFAULT_ROOT_URL https://github.com/root-project/root)
@@ -182,6 +174,9 @@ set(DEFAULT_mrd-storage-server_TAG origin/main)
 set(DEFAULT_Date_URL https://github.com/HowardHinnant/date.git )
 set(DEFAULT_Date_TAG master)
 
+set(DEFAULT_pugixml_URL https://github.com/zeux/pugixml.git )
+set(DEFAULT_pugixml_TAG v1.13)
+
 # works only for Linux
 set(Go_URL https://go.dev/dl/go1.19.3.linux-amd64.tar.gz)
 set(Go_SHA256 74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba)
@@ -201,7 +196,6 @@ if (DEVEL_BUILD)
   ## STIR
   set(DEFAULT_STIR_URL https://github.com/UCL/STIR )
   set(DEFAULT_STIR_TAG origin/master)
-  set(STIR_REQUIRED_VERSION "5.0.0")
 
   ## siemens_to_ismrmrd
   set(DEFAULT_siemens_to_ismrmrd_URL https://github.com/ismrmrd/siemens_to_ismrmrd )
@@ -224,11 +218,11 @@ if (DEVEL_BUILD)
   
 
 else()
-  set(DEFAULT_SIRF_TAG v3.4.0)
+  set(DEFAULT_SIRF_TAG v3.5.0)
   
   ## STIR
   set(DEFAULT_STIR_URL https://github.com/UCL/STIR )
-  set(DEFAULT_STIR_TAG rel_5.1.0)
+  set(DEFAULT_STIR_TAG rel_5.2.0)
 
   ## pet-rd-tools
   set(DEFAULT_pet_rd_tools_URL https://github.com/UCL/pet-rd-tools )
@@ -244,6 +238,7 @@ SET(SIRF_TAG ${DEFAULT_SIRF_TAG} CACHE STRING ON)
  
 SET(STIR_TAG ${DEFAULT_STIR_TAG} CACHE STRING ON)
 SET(STIR_URL ${DEFAULT_STIR_URL} CACHE STRING ON)
+set(STIR_REQUIRED_VERSION "5.0.0")
 
 SET(Gadgetron_TAG ${DEFAULT_Gadgetron_TAG} CACHE STRING ON)
 SET(Gadgetron_URL ${DEFAULT_Gadgetron_URL} CACHE STRING ON)
@@ -317,6 +312,9 @@ set(mrd-storage-server_TAG ${DEFAULT_mrd-storage-server_TAG} CACHE STRING ON)
 
 set(Date_URL ${DEFAULT_Date_URL} CACHE STRING ON)
 set(Date_TAG ${DEFAULT_Date_TAG} CACHE STRING ON)
+
+set(pugixml_URL ${DEFAULT_pugixml_URL} CACHE STRING ON)
+set(pugixml_TAG ${DEFAULT_pugixml_TAG} CACHE STRING ON)
 
 mark_as_advanced(SIRF_URL SIRF_TAG STIR_URL STIR_TAG
   Gadgetron_URL Gadgetron_TAG
