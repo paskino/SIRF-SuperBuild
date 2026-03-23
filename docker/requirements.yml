@@ -1,7 +1,7 @@
 name: base
 channels:
   - conda-forge
-  - https://tomography.stfc.ac.uk/conda # cil
+  #- https://tomography.stfc.ac.uk/conda # cil
   #- https://software.repos.intel.com/python/conda # cil
   #- ccpi  # cil
   - defaults
@@ -22,17 +22,18 @@ dependencies:
   - jupytext
   - tensorboard
   - tensorboardx
-  - libgomp # parallelproj
+  #- libgomp # parallelproj
+  - llvm-openmp
   - cil >=25 # cil
   # auto-uncommented in Dockerfile in GPU builds
   ## - tigre          # cil (GPU) # TODO: remove second # prefix once tigre is built for numpy>=2
   ## - astra-toolbox 2.* cuda* # cil (GPU)
   - astra-toolbox 2.* # cil
   # - cuda-version 12.8.* # cil (GPU)
-  - ipp =2021.12.*         # cil
-  - ipp-devel =2021.12.*   # cil
-  - ipp-include =2021.12.* # cil
-  - ccpi-regulariser >=25 # cil
+ # - ipp =2021.12.*         # cil
+ # - ipp-devel =2021.12.*   # cil
+ # - ipp-include =2021.12.* # cil
+ # - ccpi-regulariser >=25 # cil
   - cil-data >=22            # cil
   #- tomophantom =2.0.0      # cil # TODO: uncomment once tomophantom is built for numpy>=2
   - dxchange       # cil
