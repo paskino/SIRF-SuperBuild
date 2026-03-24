@@ -72,7 +72,7 @@ ARG BUILD_pet_rd_tools="ON"
 ARG Gadgetron_USE_CUDA="ON"
 # BUILD_CIL is defined in the previous stage
 ARG BUILD_CIL
-ARG EXTRA_BUILD_FLAGS=""
+ARG EXTRA_BUILD_FLAGS="-DNIFTYREG_EXTRA_CMAKE_ARGS=\"-DUSE_SSE=OFF\""
 
 # build, install in /opt/SIRF-SuperBuild/{INSTALL,sources/SIRF}, test (if RUN_CTEST)
 COPY docker/user_sirf-ubuntu.sh /opt/scripts/
