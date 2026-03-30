@@ -162,8 +162,8 @@ set(DEFAULT_JSON_URL https://github.com/nlohmann/json)
 set(DEFAULT_JSON_TAG v3.11.3)
 
 # CCPi CIL
-set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL)
-set(DEFAULT_CIL_TAG "numpy-2")
+set(DEFAULT_CIL_URL https://github.com/paskino/CIL)
+set(DEFAULT_CIL_TAG "numpy-2-sirf-test")
 
 set(DEFAULT_CCPi-Regularisation-Toolkit_URL https://github.com/TomographicImaging/CCPi-Regularisation-Toolkit)
 set(DEFAULT_CCPi-Regularisation-Toolkit_TAG "v25.0.0")
