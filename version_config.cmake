@@ -162,6 +162,7 @@ set(DEFAULT_JSON_URL https://github.com/nlohmann/json)
 set(DEFAULT_JSON_TAG v3.11.3)
 
 # CCPi CIL
+# test different branch of CIL to test fix
 set(DEFAULT_CIL_URL https://github.com/TomographicImaging/CIL)
 set(DEFAULT_CIL_TAG "numpy-2-sirf-test")
 
