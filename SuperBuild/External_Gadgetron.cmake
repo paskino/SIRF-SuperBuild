@@ -123,6 +123,7 @@ endif()
       -DUSE_OPENMP:BOOL=${${proj}_ENABLE_OPENMP}
       -DBUILD_TESTING:BOOL=${BUILD_TESTING_${proj}}
       -DBUILD_SUPPRESS_WARNINGS=ON # avoid Gadgetron's conversion of warnings to errors
+      ${${proj}_EXTRA_CMAKE_ARGS}
       )
 
 

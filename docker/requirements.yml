@@ -8,6 +8,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - python = 3.12.*
   - setuptools
   - wheel
   - swig >=4.2
@@ -31,14 +32,14 @@ dependencies:
   - ipympl
   # - ccpi::tigre >=3.1.3  # cil (GPU)
   # - cuda-version 12.9.*  # cil (GPU)
-  - ipp =2021.12.*         # cil
-  - ipp-devel =2021.12.*   # cil
-  - ipp-include =2021.12.* # cil
-  - ccpi-regulariser 26.*  cuda.* # cil
+  # - ipp =2021.12.*         # cil
+  # - ipp-devel =2021.12.*   # cil
+  # - ipp-include =2021.12.* # cil
+  # - ccpi-regulariser 26.*  cuda.* # cil
   - cil-data >=22          # cil
-  - astra-toolbox::astra-toolbox 2.* # cil
-  - httomo::tomophantom >=3.1.4 # cil
-  - ccpi::dxchange >=0.2.1 # cil
+  - conda-forge::astra-toolbox >=2.* # cil
+  # - httomo::tomophantom >=3.1.4 # cil
+  # - ccpi::dxchange >=0.2.1 # cil
   - h5py           # cil
   - numba          # cil
   - numpy >=2      # cil
@@ -50,3 +51,4 @@ dependencies:
   - pip:
     - git+https://github.com/ismrmrd/ismrmrd-python-tools.git@master#egg=ismrmrd-python-tools
     - unittest-parametrize # cil
+    - git+https://github.com/data-exchange/dxchange.git@master#egg=dxchange

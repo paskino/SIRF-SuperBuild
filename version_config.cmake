@@ -138,8 +138,8 @@ set(DEFAULT_STIR_URL https://github.com/UCL/STIR)
 set(DEFAULT_STIR_TAG rel_6.4.0)
 
 ## SIRF
-set(DEFAULT_SIRF_URL https://github.com/SyneRBI/SIRF)
-set(DEFAULT_SIRF_TAG "v3.10.1")
+set(DEFAULT_SIRF_URL https://github.com/paskino/SIRF)
+set(DEFAULT_SIRF_TAG omp-mr-acqmodel)
 
 ## pet-rd-tools
 set(DEFAULT_pet_rd_tools_URL https://github.com/UCL/pet-rd-tools)
