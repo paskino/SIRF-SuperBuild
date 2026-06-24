@@ -41,6 +41,11 @@ if(NOT ( DEFINED "USE_SYSTEM_${externalProjName}" AND "${USE_SYSTEM_${externalPr
 
   # conda build should never get here
   if("${PYTHON_STRATEGY}" STREQUAL "PYTHONPATH")
+    set(_mrd_storage_server_go_env "GOPATH=${${proj}_INSTALL_DIR}")
+    if(APPLE)
+      # CGO can inherit a non-existent conda wrapper compiler name.
+      list(APPEND _mrd_storage_server_go_env "CC=clang" "CXX=clang++")
+    endif()
     # in case of PYTHONPATH it is sufficient to copy the files to the 
     # $PYTHONPATH directory
     ExternalProject_Add(${proj}
@@ -53,7 +58,7 @@ if(NOT ( DEFINED "USE_SYSTEM_${externalProjName}" AND "${USE_SYSTEM_${externalPr
       UPDATE_COMMAND ""
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
-      INSTALL_COMMAND ${CMAKE_COMMAND} -E chdir ${${proj}_SOURCE_DIR}; env GOPATH=${${proj}_INSTALL_DIR} go install
+      INSTALL_COMMAND ${CMAKE_COMMAND} -E chdir ${${proj}_SOURCE_DIR} env ${_mrd_storage_server_go_env} go install
     )
 
   else()

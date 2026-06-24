@@ -52,6 +52,7 @@ if(NOT ( DEFINED "USE_SYSTEM_${externalProjName}" AND "${USE_SYSTEM_${externalPr
 
   # BLAS
   find_package(BLAS)
+  set(_gadgetron_extra_blas_args)
 
   message(STATUS "CBLAS ${CBLAS_LIBRARY} ${CBLAS_INCLUDE_DIR}")
   if (NOT (CBLAS_LIBRARY AND CBLAS_INCLUDE_DIR))
@@ -68,16 +69,42 @@ if(NOT ( DEFINED "USE_SYSTEM_${externalProjName}" AND "${USE_SYSTEM_${externalPr
 
 if (CBLAS_INCLUDE_DIR)
   message(STATUS "Adding CBLAS_INCLUDE_DIR to Gadgetron_CMAKE_ARGS: ${CBLAS_INCLUDE_DIR}")
-  list (APPEND ${proj}_CMAKE_ARGS "-DCBLAS_INCLUDE_DIR:PATH=${CBLAS_INCLUDE_DIR}")
+  list(APPEND _gadgetron_extra_blas_args "-DCBLAS_INCLUDE_DIR:PATH=${CBLAS_INCLUDE_DIR}")
 else()
   message(STATUS "CBLAS_INCLUDE_DIR will be found (probably) by Gadgetron")
 endif()
 if (CBLAS_LIBRARY)
   message(STATUS "Adding CBLAS_LIBRARY to Gadgetron_CMAKE_ARGS: ${CBLAS_LIBRARY}")
-  list(APPEND ${proj}_CMAKE_ARGS "-DCBLAS_LIBRARY:FILEPATH=${CBLAS_LIBRARY}")
+  list(APPEND _gadgetron_extra_blas_args "-DCBLAS_LIBRARY:FILEPATH=${CBLAS_LIBRARY}")
 else()
     message(STATUS "CBLAS_LIBRARY will be found (probably) by Gadgetron")
 endif()
+
+  # Help Gadgetron's custom FindLAPACKE on Conda/macOS where pkg-config
+  # sometimes does not return LAPACKE link flags.
+  find_path(_GADGETRON_LAPACKE_INCLUDE_DIR
+    NAMES lapacke.h
+    HINTS
+      ${CBLAS_INCLUDE_DIR}
+      $ENV{CONDA_PREFIX}/include
+      ${CMAKE_PREFIX_PATH}
+    PATH_SUFFIXES include
+  )
+  find_library(_GADGETRON_LAPACKE_LIBRARY
+    NAMES lapacke
+    HINTS
+      $ENV{CONDA_PREFIX}/lib
+      ${CMAKE_PREFIX_PATH}
+    PATH_SUFFIXES lib
+  )
+  if (_GADGETRON_LAPACKE_INCLUDE_DIR)
+    message(STATUS "Adding LAPACKE_INCLUDE_DIR to Gadgetron_CMAKE_ARGS: ${_GADGETRON_LAPACKE_INCLUDE_DIR}")
+    list(APPEND _gadgetron_extra_blas_args "-DLAPACKE_INCLUDE_DIR:PATH=${_GADGETRON_LAPACKE_INCLUDE_DIR}")
+  endif()
+  if (_GADGETRON_LAPACKE_LIBRARY)
+    message(STATUS "Adding LAPACKE_LIBRARIES to Gadgetron_CMAKE_ARGS: ${_GADGETRON_LAPACKE_LIBRARY}")
+    list(APPEND _gadgetron_extra_blas_args "-DLAPACKE_LIBRARIES:STRING=${_GADGETRON_LAPACKE_LIBRARY}")
+  endif()
 
   #option(Gadgetron_BUILD_PYTHON_SUPPORT
   #  "Build Gadgetron Python gadgets (not required for SIRF)" OFF)
@@ -123,7 +150,9 @@ endif()
       -DUSE_OPENMP:BOOL=${${proj}_ENABLE_OPENMP}
       -DBUILD_TESTING:BOOL=${BUILD_TESTING_${proj}}
       -DBUILD_SUPPRESS_WARNINGS=ON # avoid Gadgetron's conversion of warnings to errors
+      ${_gadgetron_extra_blas_args}
       ${${proj}_EXTRA_CMAKE_ARGS}
+      
       )
 
 
